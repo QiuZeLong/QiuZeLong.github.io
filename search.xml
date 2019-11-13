@@ -8,7 +8,7 @@
 <p>时间复杂度：O(n²)</p>
 <p>空间复杂度：O(1)</p>
 <p>稳定性：稳定</p>
-</blockquote>
+</blockquote><a id="more"></a>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(blist)</span>:</span></span><br><span class="line">    count = len(blist)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, count):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, count):</span><br><span class="line">            <span class="keyword">if</span> blist[i] &gt; blist[j]:</span><br><span class="line">                blist[i], blist[j] = blist[j], blist[i]</span><br><span class="line">    <span class="keyword">return</span> blist</span><br><span class="line"></span><br><span class="line">blist = bubble_sort([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">8</span>])</span><br><span class="line">print(blist)</span><br></pre></td></tr></table></figure>
 
 <h4 id="快排"><a href="#快排" class="headerlink" title="快排"></a>快排</h4><blockquote>
