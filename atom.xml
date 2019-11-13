@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://qzloo.cn/"/>
-  <updated>2019-11-13T11:19:04.011Z</updated>
+  <updated>2019-11-13T11:39:31.614Z</updated>
   <id>https://qzloo.cn/</id>
   
   <author>
@@ -17,17 +17,29 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>First</title>
-    <link href="https://qzloo.cn/2019/11/13/First/"/>
-    <id>https://qzloo.cn/2019/11/13/First/</id>
-    <published>2019-11-13T11:19:04.011Z</published>
-    <updated>2019-11-13T11:19:04.011Z</updated>
+    <title>Python代码</title>
+    <link href="https://qzloo.cn/2018/07/07/Python/"/>
+    <id>https://qzloo.cn/2018/07/07/Python/</id>
+    <published>2018-07-07T11:32:43.000Z</published>
+    <updated>2019-11-13T11:39:31.614Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><blockquote><p>冒泡排序：它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。</p><p>时间复杂度：O(n²)</p><p>空间复杂度：O(1)</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(blist)</span>:</span></span><br><span class="line">    count = len(blist)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, count):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, count):</span><br><span class="line">            <span class="keyword">if</span> blist[i] &gt; blist[j]:</span><br><span class="line">                blist[i], blist[j] = blist[j], blist[i]</span><br><span class="line">    <span class="keyword">return</span> blist</span><br><span class="line"></span><br><span class="line">blist = bubble_sort([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">8</span>])</span><br><span class="line">print(blist)</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;冒泡排序&quot;&gt;&lt;a href=&quot;#冒泡排序&quot; class=&quot;headerlink&quot; title=&quot;冒泡排序&quot;&gt;&lt;/a&gt;冒泡排序&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;冒泡排序：它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数
+      
     
     </summary>
     
     
+      <category term="Python" scheme="https://qzloo.cn/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="https://qzloo.cn/tags/Python/"/>
     
   </entry>
   

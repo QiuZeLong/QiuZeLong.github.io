@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>First</title>
-    <url>/2019/11/13/First/</url>
-    <content><![CDATA[]]></content>
+    <title>Python代码</title>
+    <url>/2018/07/07/Python/</url>
+    <content><![CDATA[<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><blockquote>
+<p>冒泡排序：它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。</p>
+<p>时间复杂度：O(n²)</p>
+<p>空间复杂度：O(1)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(blist)</span>:</span></span><br><span class="line">    count = len(blist)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, count):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i + <span class="number">1</span>, count):</span><br><span class="line">            <span class="keyword">if</span> blist[i] &gt; blist[j]:</span><br><span class="line">                blist[i], blist[j] = blist[j], blist[i]</span><br><span class="line">    <span class="keyword">return</span> blist</span><br><span class="line"></span><br><span class="line">blist = bubble_sort([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">9</span>,<span class="number">8</span>])</span><br><span class="line">print(blist)</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
   </entry>
 </search>
