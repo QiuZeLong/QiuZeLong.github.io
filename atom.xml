@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://qzloo.cn/"/>
-  <updated>2019-11-13T13:30:03.770Z</updated>
+  <updated>2019-11-14T03:41:19.079Z</updated>
   <id>https://qzloo.cn/</id>
   
   <author>
@@ -15,32 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Django初识</title>
-    <link href="https://qzloo.cn/2018/07/11/Django%E5%88%9D%E8%AF%86/"/>
-    <id>https://qzloo.cn/2018/07/11/Django%E5%88%9D%E8%AF%86/</id>
-    <published>2018-07-11T13:25:21.000Z</published>
-    <updated>2019-11-13T13:30:03.770Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="开始玩耍Django"><a href="#开始玩耍Django" class="headerlink" title="开始玩耍Django"></a>开始玩耍Django</h4>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;开始玩耍Django&quot;&gt;&lt;a href=&quot;#开始玩耍Django&quot; class=&quot;headerlink&quot; title=&quot;开始玩耍Django&quot;&gt;&lt;/a&gt;开始玩耍Django&lt;/h4&gt;
-      
-    
-    </summary>
-    
-    
-      <category term="Django" scheme="https://qzloo.cn/categories/Django/"/>
-    
-    
-      <category term="Django" scheme="https://qzloo.cn/tags/Django/"/>
-    
-  </entry>
   
   <entry>
     <title>Python代码</title>
