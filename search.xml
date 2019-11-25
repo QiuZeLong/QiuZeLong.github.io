@@ -303,7 +303,7 @@
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><blockquote>
 <p>至此，我们的<code>HELLO WORLD</code>项目已经涵盖了<code>django</code>框架中的大部分常用的组件；</p>
 <p><strong>路由</strong>、<strong>视图</strong>、<strong>模板</strong>、<strong>静态</strong>、<strong>模型</strong>，<strong>admin</strong></p>
-<p>那么其中每一部分都还有很多内容等着我们去了解，在接下来的章节中我们会继续详细给大家介绍！</p>
+<p>那么其中每一部分都还有很多内容等着我们去了解！</p>
 </blockquote>
 ]]></content>
       <categories>
