@@ -99,7 +99,13 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-38.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-39.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-40.jpg">
-<meta property="og:updated_time" content="2019-12-18T08:16:19.164Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-41.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-42.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-43.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-44.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-45.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-46.jpg">
+<meta property="og:updated_time" content="2019-12-18T11:23:22.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-1.jpg">
 
@@ -309,14 +315,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.5k</span>
+              <span>5.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -564,6 +570,53 @@
 <blockquote>
 <p>好了，<code>zabbix web</code>的安装及简介暂时告一段落</p>
 </blockquote>
+<h5 id="安装zabbix-agent"><a href="#安装zabbix-agent" class="headerlink" title="安装zabbix agent"></a>安装<code>zabbix agent</code></h5><blockquote>
+<p>万事俱备，就差<code>agent</code>端了，<code>agent</code>端安装也非常方便，直接被监控主机上安装如下两个包即可</p>
+<p>此处被管理主机为<code>centos7.3</code>，已经配置好了对应的<code>zabbix</code>源，<code>agent</code>版本可以跟<code>server</code>端版本不一致，没有关系，安装即可</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-41.jpg" alt="2-41"></p>
+<blockquote>
+<p>我们查看一下<code>zabbix-agent</code>都安装了哪些文件，当然，最重要的就是<code>zabbix_agentd.conf</code>这个配置文件了</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-42.jpg" alt="2-42"></p>
+<blockquote>
+<p>还记得我们在刚开始介绍<code>zabbix</code>时，说过的’主动模式’与’被动模式’吗？这两种模式的相关配置，都需要在<code>zabbix_agentd.conf</code>中定义，打开这个文件，我们来配置一下最常用的<code>agent</code>端配置。首先，可以看到配置文件中有很多注释，打开配置文件，首先看到的就是’通用参数配置段’，我们可以在此配置段配置<code>zabbix_agent</code>进程的进程编号文件路径，存储日志方式，日志文件位置，日志滚动阈值等常用设定，细心如你一定已经发现，<code>zabbix_agent</code>配置文件的’通过配置段’中的参数大多数与<code>zabbix_server</code>配置文件中的仓用参数意义相同，所以，此处不再过多赘述，如果没有特殊需要，保持默认即可</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-43.jpg" alt="2-43"></p>
+<blockquote>
+<p>此处先说说我们马上会用到的两个配置段，如下图红框中的注释所描述的，’被动模式配置段’与’主动模式配置段’</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-44.jpg" alt="2-44"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-45.jpg" alt="2-45"></p>
+<blockquote>
+<p>我们已经在最开始的概念介绍中，描述过，’主动模式’与’被动模式’都是对于<code>agent</code>端来说的，而且它们可以同时存在，并不冲突</p>
+<p>我们来看看’被动模式’的相关配置参数</p>
+<p>被动模式相关参数如下</p>
+<p><code>Server</code>：用于指定允许哪台服务器拉取当前服务器的数据，当<code>agent</code>端工作于被动模式，则代表<code>server</code>端会主动拉取<code>agent</code>端数据，那么<code>server</code>端的<code>IP</code>必须与此参数的<code>IP</code>对应，此参数用于实现基于<code>IP</code>的访问控制，如果有多个<code>IP</code>，可以使用逗号隔开</p>
+<p><code>ListenPort</code>：用于指定当<code>agent</code>端工作于被动模式时所监听的端口号，默认端口为<code>10050</code>，也就是说，<code>server</code>端默认访问<code>10050</code>端口，从而拉取数据</p>
+<p><code>ListenIP</code>：用于指定<code>agent</code>端工作于被动模式时所监听的<code>IP</code>地址，默认值为<code>0.0.0.0</code>，表示监听本机的所有<code>IP</code>地址</p>
+<p><code>StartAgents</code>：用于指定欲生成的<code>agent</code>进程数量</p>
+</blockquote>
+<blockquote>
+<p>好了，被动模式的参数说完了，现在聊聊主动模式</p>
+<p>主动模式的常用参数如下</p>
+<p><code>ServerActive</code>：此参数用于指定当<code>agent</code>端工作于主动模式时，将信息主动推送到哪台<code>server</code>上，当有多个<code>IP</code>时，可以用逗号隔开</p>
+<p><code>Hostname</code>：此参数用于指定当前主机的主机名，<code>server</code>端通过此参数对应的主机名识别当前主机</p>
+<p><code>RefreshActiveChecks</code>：此参数用于指定<code>agent</code>端每多少秒主动将采集到的数据发往<code>server</code>端</p>
+</blockquote>
+<blockquote>
+<p>此处，我们同时设置’被动模式’与’主动模式’的如下参数，其他保持默认即可，修改完成后保存退出</p>
+<p><code>Server=116.62.188.230</code></p>
+<p><code>ServerActive=116.62.188.230</code></p>
+<p><code>Hostname=zabbix.qzl.net</code></p>
+</blockquote>
+<blockquote>
+<p>配置文件修改完成之后，启动agent端进行</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-46.jpg" alt="2-46"></p>
+<blockquote>
+<p>好了，agent端也已经安装完毕了</p>
+</blockquote>
 
     </div>
 
@@ -653,7 +706,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Zabbix"><span class="nav-text">Zabbix</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装zabbix-server"><span class="nav-text">安装zabbix server</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化zabbix-database"><span class="nav-text">初始化zabbix database</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置zabbix-server端并启动"><span class="nav-text">配置zabbix server端并启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装zabbix-web"><span class="nav-text">安装zabbix web</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化zabbix-配置"><span class="nav-text">初始化zabbix 配置</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Zabbix"><span class="nav-text">Zabbix</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#安装zabbix-server"><span class="nav-text">安装zabbix server</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化zabbix-database"><span class="nav-text">初始化zabbix database</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置zabbix-server端并启动"><span class="nav-text">配置zabbix server端并启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装zabbix-web"><span class="nav-text">安装zabbix web</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化zabbix-配置"><span class="nav-text">初始化zabbix 配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装zabbix-agent"><span class="nav-text">安装zabbix agent</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -736,7 +789,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:44</span>
+    <span title="站点阅读时长">1:46</span>
 </div>
 
         
