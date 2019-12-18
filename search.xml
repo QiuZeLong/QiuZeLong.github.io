@@ -1,6 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Zabbix(2)：Zabbix安装</title>
+    <url>/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/</url>
+    <content><![CDATA[<h4 id="Zabbix"><a href="#Zabbix" class="headerlink" title="Zabbix"></a>Zabbix</h4><blockquote>
+<p>我们在上一篇介绍<code>zabbix</code>的基本概念的文章中已经描述过，<code>zabbix</code>的几个常用的重要组件，在安装<code>zabbix</code>时，其实就是在安装这些组件</p>
+<p>由于我们的监控规模并不庞大，所以此处不会安装<code>zabbix proxy</code>，我们将会安装如下组件：</p>
+<p><code>zabbix server</code></p>
+<p><code>zabbix database</code></p>
+<p><code>zabbix web</code></p>
+<p><code>zabbix agent</code></p>
+</blockquote><a id="more"></a>
+<blockquote>
+<p>此处我们将要安装的<code>zabbix server</code>版本为<code>zabbix3.0.7</code></p>
+<p>如果你想要无痛的跟随本博客中的步骤进行练习，请安装3.0版本的<code>zabbix</code></p>
+<p>因为<code>zabbix3.X</code>依赖的<code>php</code>版本不能低于<code>php5.4</code>，而<code>centos6.8</code>中，<code>php</code>默认版本为5.3</p>
+<p>如果你想要使用<code>centos6.X</code>的操作系统，同时想要更加方便的升级<code>php</code>，可以使用<code>Remi</code>源升级<code>php</code></p>
+<p>但是为了更加方便的使用yum源安装相关软件包，此处使用7.3安装<code>zabbix3.0.7</code></p>
+</blockquote>
+<blockquote>
+<p>首先，为了方便安装，配置<code>zabbix</code>的官方<code>yum</code>源</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-1.jpg" alt="2-1"></p>
+<blockquote>
+<p>我们配置了<code>zabbix3.0</code>的<code>yum</code>源</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-2.jpg" alt="2-2"></p>
+<blockquote>
+<p>同时，我们配置了base源与epel源，因为安装过程中会用到这些yum源</p>
+<p>准备工作完毕，剩下的就是安装各个组件了</p>
+</blockquote>
+<h5 id="安装zabbix-server"><a href="#安装zabbix-server" class="headerlink" title="安装zabbix server"></a>安装<code>zabbix server</code></h5><blockquote>
+<p>我们先从<code>zabbix server</code>开始安装，由于我们使用<code>mysql</code>作为数据库，所以，在安装<code>zabbix3.X</code>的版本的<code>server</code>端时，需要安装<code>zabbix-server-mysql</code>包，在<code>3.X</code>的<code>zabbix</code>版本中，并没有单独的<code>zabbix server</code>端程序包，安装<code>zabbix-server-mysql</code>包即为安装了<code>server</code>端包，同时，我们可以在服务端安装<code>zabbix_get</code>包，以便向<code>agent</code>端发起测试采集数据请求，所以，我们在<code>server</code>端安装如下包</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-3.jpg" alt="2-3"></p>
+<blockquote>
+<p>安装完成上述两个包以后，<code>server</code>即为安装完成，是不是很简单，<code>server</code>端的相关配置我们一会儿再进行</p>
+</blockquote>
+<h5 id="初始化zabbix-database"><a href="#初始化zabbix-database" class="headerlink" title="初始化zabbix database"></a>初始化<code>zabbix database</code></h5><blockquote>
+<p>此处我们将<code>mysql</code>与<code>zabbix</code>安装在同一台服务器上，安装<code>mysql</code>的过程此处不再赘述，当我们安装完<code>mysql</code>，需要初始化<code>zabbix</code>的数据库，而在我们安装<code>zabbix server</code>时，其中就包含初始化<code>zabbix</code>数据库的<code>sql</code>脚本</p>
+<p>我们查看刚才安装完成的<code>zabbix-server-mysql</code>，可以看到一个<code>create.sql.gz</code>的包</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-4.jpg" alt="2-4"></p>
+<blockquote>
+<p>解压此包即可获得初始化<code>sql</code>脚本</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-5.jpg" alt="2-5"></p>
+<blockquote>
+<p>但是需要注意的是，此<code>sql</code>脚本中<code>sql</code>只会在对应的数据库中初始化<code>zabbix</code>所需要的数据库表，但是不会创建<code>zabbix</code>数据库，所以，创建<code>zabbix</code>数据库这一步骤，还是需要我们手动进行的，所以，此处我们先手动创建<code>zabbix</code>的数据库，过程如下</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-6.jpg" alt="2-6"></p>
+<blockquote>
+<p><code>zabbix</code>数据库初始化完成后，执行对应的<code>sql</code>初始化脚本</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-7.jpg" alt="2-7"></p>
+<blockquote>
+<p>查看<code>zabbix</code>数据库，发现对应的表已经生成</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-8.jpg" alt="2-8"></p>
+<h5 id="配置zabbix-server端并启动"><a href="#配置zabbix-server端并启动" class="headerlink" title="配置zabbix server端并启动"></a>配置<code>zabbix server</code>端并启动</h5><blockquote>
+<p><code>server</code>端已经安装完毕，并且数据库也已经初始化，现在我们开始配置<code>server</code>端，编辑<code>zabbix server</code>端的配置文件</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-9.jpg" alt="2-9"></p>
+<blockquote>
+<p>此处列出我们可能会经常修改的参数，如下</p>
+<p><code>ListenPort=10051</code></p>
+<p># 服务端监听的端口，保持默认即可</p>
+<p><code>SourceIP=</code></p>
+<p># 通过<code>SourceIP</code>参数可以指定服务端的源<code>IP</code>，当<code>server</code>端有多个<code>IP</code>地址时，我们可以指定服务端使用固定的<code>IP</code>与<code>agent</code>端进行通讯，为了安全起见，<code>agent</code>端会基于<code>IP</code>进行一定的访问控制，也就是说<code>agent</code>端只允许指定的<code>IP</code>以<code>server</code>端的身份采集被监控主机的数据，如果<code>IP</code>不对应，则不允许采集被监控主机的数据，所以，当<code>server</code>端有多个<code>IP</code>时，我们可以通过<code>SourceIP</code>参数，指定<code>server</code>端通过哪个<code>IP</code>采集被监控主机的数据</p>
+<p><code>LogType=file</code></p>
+<p># 通过<code>LogType</code>参数，可以指定通过那种方式记录日志，此参数可以设置为三种植，<code>system</code>、<code>file</code>、<code>console</code>，<code>system</code>表示将日志发往<code>syslog</code>，<code>file</code>表示使用指定的文件作为日志文件，<code>console</code>表示将日志发往控制台，默认为<code>file</code></p>
+<p><code>LogFile=/var/log/zabbix/zabbix_server.log</code></p>
+<p># 当<code>LogType</code>设置为<code>file</code>时，通过<code>LogFile</code>参数设置日志文件位置</p>
+<p><code>LogFileSize=0</code></p>
+<p># 指明日志文件达到多大时自动滚动，单位为<code>MB</code>，如果设置<code>LogFileSize</code>为<code>50</code>，表示日志大小达到<code>50MB</code>滚动一次，设置为<code>0</code>表示日志文件不会滚动，所有日志保存在一个文件中</p>
+<p><code>DebugLevel=3</code></p>
+<p># 通过<code>DebugLevel</code>参数可以定义日志的详细程度，即为日志级别</p>
+<p><code>DBHost=localhost</code></p>
+<p># 通过<code>DBHost</code>参数设置<code>zabbix</code>数据库所在的服务器<code>IP</code>，由于此处<code>zabbix</code>与<code>mysql</code>安装在同一服务器上，所以此处设置为<code>localhost</code></p>
+<p><code>DBName=zabbix</code></p>
+<p># 通过<code>DBName</code>指定<code>zabbix</code>数据库对应的名称</p>
+<p><code>DBUser=zabbix</code></p>
+<p># 通过<code>DBUser</code>指定<code>zabbix</code>数据库用户名</p>
+<p><code>DBPassword=123456</code></p>
+<p># 通过<code>DBPassword</code>指定<code>zabbix</code>数据库用户的密码</p>
+<p><code>DBPort=3306</code></p>
+<p># 通过<code>DBPort</code>指定<code>zabbix</code>所在数据库服务监听的端口号</p>
+<p><code>DBSocket=/var/lib/mysql/mysql.sock</code></p>
+<p># 如果数据库服务与<code>server</code>端在同一台服务器上，可以通过<code>DBSocket</code>指定数据库本地套接字文件位置，但是需要注意，即使设置了<code>mysql</code>套接字文件的位置，还是需要配合<code>DBHost</code>参数，否则在登录<code>zabbix</code>控制台时，可能会出现警告，在<code>zabbix server</code>的<code>log</code>中，也可能会出现无法连接到数据库的提示</p>
+</blockquote>
+<blockquote>
+<p>根据上述的配置参数的解释，根据具体需求进行实际配置即可</p>
+</blockquote>
+<blockquote>
+<p>配置完成后，启动<code>zabbix</code>服务端即可，启动后，<code>10051</code>端口已经被监听</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-10.jpg" alt="2-10"></p>
+<blockquote>
+<p>好了，<code>zabbix server</code>已经启动，剩下的就是初始化<code>zabbix</code>设置了，但是初始化<code>zabbix</code>的设置需要<code>zabbix web</code>提供的<code>GUI</code>图形化界面，所以，我们需要先安装<code>zabbix web</code></p>
+</blockquote>
+<h5 id="安装zabbix-web"><a href="#安装zabbix-web" class="headerlink" title="安装zabbix web"></a>安装<code>zabbix web</code></h5><blockquote>
+<p><code>zabbix web</code>可以安装在单独的主机上，只要连接到<code>zabbix database</code>所在的数据库即可，但是此处为了方便，我们将<code>zabbix web</code>与<code>mysql</code>以及<code>zabbix server</code>安装在同一台服务器上</p>
+<p>因为<code>zabbix web</code>需要<code>lamp</code>环境，所以，此处我们将会依赖到的环境先安装好</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-11.jpg" alt="2-11"></p>
+<blockquote>
+<p>完成上述步骤后，安装<code>zabbix web</code>所需要的两个包，对应版本为<code>3.0.7</code></p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-12.jpg" alt="2-12"></p>
+<blockquote>
+<p>查看刚才安装完成的<code>zabbix-web</code>程序包，可以看到，<code>zabbix-web</code>的<code>web</code>应用存放在<code>/usr/share/zabbix</code>中</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-13.jpg" alt="2-13"></p>
+<blockquote>
+<p><code>zabbix</code>还是比较贴心的，针对<code>httpd</code>，<code>zabbix-web</code>包中已经包含了对应<code>zabbix</code>文档路径的配置文件</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-14.jpg" alt="2-14"></p>
+<blockquote>
+<p>可以看到，针对<code>zabbix web</code>的文档路径，此文件中已经为我们准备好了默认配置，如果不使用<code>httpd</code>的虚拟主机，主要将时区稍加改动即可直接使用</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-15.jpg" alt="2-15"></p>
+<blockquote>
+<p>而此处，我们使用<code>httpd</code>的虚拟主机访问<code>zabbix web</code>，所以，将配置文件中的内容改为如下配置，同时将时区修改为亚洲上海</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-16.jpg" alt="2-16"></p>
+<blockquote>
+<p>配置完成后，启动hettpd服务</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-17.jpg" alt="2-17"></p>
+<blockquote>
+<p>好了，<code>zabbix web</code>安装配置完成</p>
+</blockquote>
+<h5 id="初始化zabbix-配置"><a href="#初始化zabbix-配置" class="headerlink" title="初始化zabbix 配置"></a>初始化<code>zabbix</code> 配置</h5><blockquote>
+<p>完成上述安装步骤后，访问<code>zabbix_IP/zabbix</code>，可以看到如下图的<code>zabbix</code>安装页面，点击下一步按钮</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-18.jpg" alt="2-18"></p>
+<blockquote>
+<p>可以看到，<code>zabbix</code>自动检查了安装环境是否满足要求，如果出现不满足要求的情况，需要进一步处理，此处没有问题，点击下一步</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-19.jpg" alt="2-19"></p>
+<blockquote>
+<p>此处<code>zabbix</code>需要配置数据库连接，此处配置数据库的类型，<code>IP</code>，端口，数据库名，用户密码等信息，端口填写<code>0</code>表示使用默认端口(<code>3306</code>端口)</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-20.jpg" alt="2-20"></p>
+<blockquote>
+<p>此处，我们可以填写<code>zabbix server</code>的详细信息，包括<code>IP</code>地址，端口号，以及<code>server</code>名称等，填写完成后点击下一步</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-21.jpg" alt="2-21"></p>
+<blockquote>
+<p>在配置之前，请确定概要信息无误，点击下一步</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-22.jpg" alt="2-22"></p>
+<blockquote>
+<p>从提示可以看出，初始化配置已经完成，而且<code>zabbix</code>提示我们，这些配置信息都被保存到了<code>&#39;/etc/zabbix/web/zabbix.conf.php&#39;</code>配置文件中，如果想要更改刚才的一些配置，可以通过修改此文件完成，初始化已经完成，点击结束即可</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-23.jpg" alt="2-23"></p>
+<blockquote>
+<p>点击完成按钮后，可以看到<code>zabbix</code>的登录页面，默认的管理员用户为<code>admin</code>，密码为<code>zabbix</code>，输入用户名密码后登录</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-24.jpg" alt="2-24"></p>
+<blockquote>
+<p>登录完成后，可以看到<code>zabbix</code>的仪表盘</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-25.jpg" alt="2-25"></p>
+<blockquote>
+<p>哈哈哈，我知道你看英文不爽，别急，现在就调成中文，点击下图中红框标注的图标</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-26.jpg" alt="2-26"></p>
+<blockquote>
+<p>语言选择中文，点击更新即可，但是你可能无法在语言中看到中文选项，如果无法找到中文选项，则代表你的配置文件中的中文选项显示属性为<code>False</code></p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-27.jpg" alt="2-27"></p>
+<blockquote>
+<p>如果你安装的<code>zabbix3.0.X</code>无法看到中文选项，那么你可以需要少许额外的操作，首先，你需要修改如下文件</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-28.jpg" alt="2-28"></p>
+<blockquote>
+<p>找到中文对应的值，将显示属性设置为true即可</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-29.jpg" alt="2-29"></p>
+<blockquote>
+<p>但是，你可能还会遇见中文乱码的情况，如果遇到中文乱码，可以从<code>windows</code>中挑选一个顺眼的中文字体，将对应字体文件放置到<code>linux</code>中<code>zabbix web</code>的字体目录中，因为我们使用的是<code>rpm</code>包安装的<code>zabbix web</code>，所以<code>zabbix web</code>的默认字体目录为<code>/usr/share/zabbix/fonts</code>，<code>windows</code>中的字体文件后缀名如果为<code>TTF</code>，当我们把对应字体文件拷贝到<code>zabbix</code>字体目录时，需要修改其后缀名为小写的<code>ttf</code>(如果本来就是小写的则不用任何修改)，字体文件上传完毕后，修改<code>/usr/share/zabbix/include/defines.inc.php</code>配置文件，将下图中显示字体部分修改为刚才上传的字体文件对应的名称即可</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-30.jpg" alt="2-30"></p>
+<blockquote>
+<p>比如，我选择了’微软雅黑’字体，将<code>msyh.ttf</code>文件上传至<code>zabbix</code>的<code>fonts</code>目录后，配置文件修改如下</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-31.jpg" alt="2-31"></p>
+<blockquote>
+<p>好了，上述操作完成后，<code>zabbix</code>控制台即显示为中文了</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-32.jpg" alt="2-32"></p>
+<blockquote>
+<p>但是，你可能会在访问<code>zabbix</code>控制台时，可能会发现如下提示</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-33.jpg" alt="2-33"></p>
+<blockquote>
+<p>如果出现上图中的提示，可能是由如下几个原因引起的</p>
+</blockquote>
+<ol>
+<li><code>zabbix-server</code>未正常启动</li>
+<li>已经开始<code>selinux</code>，但是没有正常设置对应权限</li>
+<li><code>zabbix-server</code>未能正常连接数据库</li>
+<li><code>zabbix.conf.php</code>文件中<code>$ZBX_SERVER</code>参数对应的主机名不能正常解析</li>
+<li>其他原因，需要查看<code>zabbix server</code>日志</li>
+</ol>
+<blockquote>
+<p>如果在访问<code>zabbix</code>控制台时并没有出现上述提示，忽略上述描述即可</p>
+</blockquote>
+<blockquote>
+<p>为了更加安全，我们不应该使用管理员的默认密码，所以，我们最好先修改管理员密码</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-34.jpg" alt="2-34"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-35.jpg" alt="2-35"></p>
+<blockquote>
+<p>好了，我们以后的监控工作就要围绕这个<code>web</code>界面展开了，为了以后更好的展开工作，我们先大概的了解一下<code>zabbix</code>的菜单</p>
+</blockquote>
+<blockquote>
+<p>管理菜单中，一般用于管理<code>zabbix</code>自身及<code>zabbix</code>相关设置</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-36.jpg" alt="2-36"></p>
+<blockquote>
+<p>配置菜单中，一般用于配置监控相关设置</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-37.jpg" alt="2-37"></p>
+<blockquote>
+<p>监测中菜单，一般用于查看被监控的相关数据</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-38.jpg" alt="2-38"></p>
+<blockquote>
+<p>报表菜单中，可以为管理员生成一段时间内的监控统计信息</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-39.jpg" alt="2-39"></p>
+<blockquote>
+<p>资产记录菜单中，管理员可以查看被管控的主机有那些，以及相关的资产信息</p>
+</blockquote>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-40.jpg" alt="2-40"></p>
+<blockquote>
+<p>好了，<code>zabbix web</code>的安装及简介暂时告一段落</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Zabbix</category>
+      </categories>
+      <tags>
+        <tag>Zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Zabbix(1)：Zabbix概念</title>
     <url>/2010/01/01/Zabbix%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<h4 id="Zabbix"><a href="#Zabbix" class="headerlink" title="Zabbix"></a>Zabbix</h4><h5 id="Zabbix监控系统入门简介"><a href="#Zabbix监控系统入门简介" class="headerlink" title="Zabbix监控系统入门简介"></a>Zabbix监控系统入门简介</h5><blockquote>
