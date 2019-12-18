@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Zabbix(3)：zabbix添加主机</title>
+    <url>/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/</url>
+    <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
+<p>在前文中，我们已经介绍过了<code>zabbix</code>是什么，以及怎样安装<code>zabbix</code>环境，那么现在，我们应该开始实际动手使用<code>zabbix</code>了，为了能让大家更加容易理解实际使用过程中将会用到的术语以及概念，我们先把实际工作场景描述清楚，然后再根据描述的工作场景进行演示</p>
+</blockquote><a id="more"></a>
+<blockquote>
+<p>假设，我们想要使用<code>zabbix</code>监控一台<code>linux</code>服务器，那么，我们肯定要将这个服务器纳入<code>zabbix</code>的管理范围，而’添加主机’这个操作，就是将被监控的主机纳入<code>zabbix</code>管理范围的一个必须操作，如果我们有<code>10</code>台主机都需要被<code>zabbix</code>监控呢，没错，这<code>10</code>台主机都必须被添加到<code>zabbix</code>的监控列表中，在<code>zabbix</code>中，我们将被监控的对象称之为’主机’，’主机’不一定是服务器，也可以是路由器，交换机等网络设备，而且，根据主机的属性、角色、特征的不同，我们还能够将主机分组，比如，我们有<code>10</code>台服务器，<code>10</code>台服务器中，有<code>3</code>台<code>windows</code>服务器，有<code>7</code>台<code>linux</code>服务器，那么，我们可以按照操作系统的不同，将他们分为两组，<code>windows</code>服务器组与<code>linux</code>服务器组，或者我们不按照操作系统对主机进行分组，而是根据服务器的角色对主机分组，比如，一共<code>10</code>台服务器，<code>3</code>台是提供<code>ldap</code>服务的，<code>2</code>台是提供<code>web</code>服务的，<code>5</code>台是提供数据库服务的，我们也可以把它们按照角色分成<code>3</code>组，<code>ldap</code>主机组、<code>web</code>主机组、<code>db</code>主机组，当然，我们只是举个例子，实际应用中，具体怎样分组，是根据实际需求视情况而定的，那么，为什么要将主机分组呢，这是为了方便管理，因为同一类主机需要被监控的指标很有可能都是相同的，所以将它们分为一组方便管理，这是后话，我们到时候再聊</p>
+</blockquote>
+<blockquote>
+<p>上面一段话中，我们提到了两个<code>zabbix</code>的常用术语，’主机’与’主机组’，我们再来总结一遍</p>
+<ol>
+<li><code>host</code>(主机)：需要被<code>zabbix</code>监控的对象，被称为主机，主机必须属于某个主机组</li>
+<li><code>hostgroup</code>(主机组)：’主机组’也被称为’主机群组’，是由具有相同属性、特征、角色的多个主机组成的逻辑单元</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>好了，理解上述两个术语，并且能够在<code>zabbix</code>中是同它们，就是我们这篇文章所要达到的目标</p>
+<p>那么，我们来看看怎样在<code>zabbix</code>中添加一台主机，在动手添加主机之前，先说明一下我们的环境</p>
+<p>我们已经将<code>zabbix-server</code>、<code>zabbix-database</code>、<code>zabbix-web</code>安装在了<code>116.62.188.230</code>上</p>
+<p>同时，我们将<code>zabbix-agent</code>安装在了<code>47.96.189.157</code>上</p>
+<p>所以此处，<code>47.96.189.157</code>就是被监控的对象，我们需要将<code>47.96.189.157</code>添加为<code>zabbix</code>主机</p>
+</blockquote>
+<blockquote>
+<p>好了，跟我一起搞起来，首先，打开我们的<code>zabbix web</code>控制台，我们看看都有哪些’主机组’</p>
+<p>点击’配置’—-‘主机群组’，可以看到，系统默认已经为我们准备了一些主机组，如果这些主机组不满足我们的需要，我们也可以创建新的主机组，点击下图中的’创建主机群组’按钮，即可创建主机组，但是，现在我们还不用深入研究主机组，此处只是让大家了解一下，对主机组有一个初步的认识即可</p>
+</blockquote>
+<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-1.jpg" alt="3-1"></p>
+<blockquote>
+<p>同样，点击’配置’—-‘主机’，即可查看已经被加入<code>zabbix</code>主机列表的主机，可以看到，<code>zabbix</code>默认将<code>zabbix server</code>添加为了一台主机，以便可以自己监控自己，但是此处，我们需要添加一台我们自己的主机，就是<code>47.96.189.157</code>，点击’创建主机’，点击创建主机之前，可以选择左侧的’群组’下拉菜单，以确定将要创建的主机所在的主机组，当然，我们也可以先不选主机组，直接点击’创建主机’按钮</p>
+</blockquote>
+<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-2.jpg" alt="3-2"></p>
+<blockquote>
+<p>点击’创建主机’按钮以后，即可看到类似如下界面，为了更好的描述每个步骤，具体解释参考下图后面的注释列表</p>
+</blockquote>
+<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-3.jpg" alt="3-3"></p>
+<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-4.jpg" alt="3-4"></p>
+<ol>
+<li>我们可以在主机名称的文本框中填写被监控主机的主机名称</li>
+<li>‘可见名称’一般使用简短的、易读的、见名知义的名称表示主机即可</li>
+<li>我们可以选择将要创建的主机属于哪个主机组，当然，如果没有合适的主机组，我们也可以直接在创建主机时，直接新建主机组，我们说过，每个主机必须存在于某个主机组中，所以，主机组是必须的</li>
+<li>如果在’3’的位置没有对应的、可用的、合适的主机组，我们可以直接在’新的群组’中创建符合当前主机需要的主机组</li>
+<li>选择通过哪种接口监控当前主机，可选的方式有<code>IPMI</code>接口、<code>JMX</code>接口、<code>SNMP</code>接口、<code>agent</code>接口，我们说过，’主机’在<code>zabbix</code>中，可以是服务器，路由器，交换机等等硬件设备，有的硬件设备只支持某种接口，所以，当我们添加主机时，会让我们选择通过哪种合适的接口监控它，具体各接口的使用场景我们已经在第一篇介绍<code>zabbix</code>概念的文章中描述过，此处不再赘述，当然，如果一台自助机能被多种接口所监控，也可以同时配置多个接口监控这台主机，但是当前，我们需要监控的主机是一台<code>linux</code>服务器，而且已经安装了对应的<code>agent</code>端，所以，此处，我们只使用<code>agent</code>接口对当前主机进行监控，而使用<code>agent</code>接口时，可以通过<code>IP</code>连接到对应<code>agent</code>，也可以使用主机名连接到对应<code>agent</code>，而此处，我们选择使用<code>IP</code>地址连接到对应的<code>agent</code>，<code>IP</code>地址就是我们将要添加的主机的<code>IP</code>，<code>47.96.189.157</code>，对应端口为默认的<code>10050</code>，如果你想要使用主机名连接到对应的<code>agent</code>，那么需要保证主机名能够被正常解析到<code>47.96.189.157</code>上，此处不再赘述，如果有多个<code>IP</code>可以连接到对应<code>agent</code>，可以点击’添加’，添加一条新的<code>IP</code></li>
+<li>对将要添加的主机进行描述，添加相应的描述信息即可</li>
+<li>表示是否使用<code>zabbix proxy</code>监控当前主机，虽然上图中，此处翻译为’由<code>agent</code>代理程序检测’，但是实际是用于指定<code>zabbix proxy</code>的，与<code>zabbix agent</code>并没有关系，但是因为我们没有配置<code>zabbix proxy</code>，所以此处保持默认即可</li>
+</ol>
+<blockquote>
+<p>好了，按照上述界面中的配置进行设置以后，点击’添加’按钮，即可简单的添加一台主机，可以看到，<code>47.96.189.157</code>已经被添加到了主机列表中</p>
+</blockquote>
+<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-5.jpg" alt="3-5"></p>
+<blockquote>
+<p>而且，如果此时我们再次查看主机组，已经发现，<code>Zabbix test</code>主机组已经被添加了，而且其中的成员已经包含了<code>testzabbix1</code>主机</p>
+</blockquote>
+<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-6.jpg" alt="3-6"></p>
+<blockquote>
+<p>回到主机列表，可以看到我们刚才添加的<code>testzabbix1</code>主机，但是<code>testzabbix1</code>主机的’可用性’对应的<code>4</code>种接口都是灰色的</p>
+</blockquote>
+<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-7.jpg" alt="3-7"></p>
+<blockquote>
+<p>上图中，<code>ZBX</code>就代表<code>agent</code>接口，虽然我们在添加主机时，配置了通过<code>agent</code>监控对应主机，但是，由于我们并没有配置监控主机的任何指标，所以，<code>ZBX</code>仍然是灰色的，也就是说，我们现在只是将<code>47.96.189.157</code>加入了<code>zabbix</code>的监控范围，但是并没有对它进行任何实际的监控，因为我们还没有配置任何’监控项’，至于怎样配置监控项，且听下回分解</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Zabbix</category>
+      </categories>
+      <tags>
+        <tag>Zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Zabbix(2)：Zabbix安装</title>
     <url>/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/</url>
     <content><![CDATA[<h4 id="Zabbix"><a href="#Zabbix" class="headerlink" title="Zabbix"></a>Zabbix</h4><blockquote>
@@ -277,7 +346,7 @@
 <p>此处，我们同时设置’被动模式’与’主动模式’的如下参数，其他保持默认即可，修改完成后保存退出</p>
 <p><code>Server=116.62.188.230</code></p>
 <p><code>ServerActive=116.62.188.230</code></p>
-<p><code>Hostname=zabbix.qzl.net</code></p>
+<p><code>Hostname=testzabbix1.qzl.net</code></p>
 </blockquote>
 <blockquote>
 <p>配置文件修改完成之后，启动agent端进行</p>
