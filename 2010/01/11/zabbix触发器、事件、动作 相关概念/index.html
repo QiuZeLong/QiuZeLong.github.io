@@ -51,26 +51,18 @@
   };
 </script>
 
-  <meta name="description" content="zabbix 在前文中，我们已经介绍过了zabbix是什么，以及怎样安装zabbix环境，那么现在，我们应该开始实际动手使用zabbix了，为了能让大家更加容易理解实际使用过程中将会用到的术语以及概念，我们先把实际工作场景描述清楚，然后再根据描述的工作场景进行演示">
+  <meta name="description" content="zabbix 这篇文章将会初步的介绍zabbix中的触发器、事件、动作等相关概念 我有一个朋友，我很佩服他，他的行动能力特别强，想到了，计划好了，就去做，比如说养鸡，他在农村找了一片地，盖了一个养鸡场，然后就开始养鸡，并且把土鸡下的蛋加以包装，以绿色无污染的优势在市场上售卖，后来，他还去考了一个飞机驾照，我知道养鸡和飞机并没有什么关系，我只是单纯的感觉他的人生非常精彩而已，有的客官看到这里就怒了，">
 <meta name="keywords" content="Zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zabbix(3)：zabbix添加主机">
-<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;index.html">
+<meta property="og:title" content="Zabbix(6)：zabbix触发器、事件、动作 相关概念">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;11&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%20%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5&#x2F;index.html">
 <meta property="og:site_name" content="97y">
-<meta property="og:description" content="zabbix 在前文中，我们已经介绍过了zabbix是什么，以及怎样安装zabbix环境，那么现在，我们应该开始实际动手使用zabbix了，为了能让大家更加容易理解实际使用过程中将会用到的术语以及概念，我们先把实际工作场景描述清楚，然后再根据描述的工作场景进行演示">
+<meta property="og:description" content="zabbix 这篇文章将会初步的介绍zabbix中的触发器、事件、动作等相关概念 我有一个朋友，我很佩服他，他的行动能力特别强，想到了，计划好了，就去做，比如说养鸡，他在农村找了一片地，盖了一个养鸡场，然后就开始养鸡，并且把土鸡下的蛋加以包装，以绿色无污染的优势在市场上售卖，后来，他还去考了一个飞机驾照，我知道养鸡和飞机并没有什么关系，我只是单纯的感觉他的人生非常精彩而已，有的客官看到这里就怒了，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-1.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-2.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-3.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-4.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-5.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-6.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-7.jpg">
-<meta property="og:updated_time" content="2019-12-18T12:51:55.757Z">
+<meta property="og:updated_time" content="2019-12-19T12:38:12.564Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;05&#x2F;zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA&#x2F;3-1.jpg">
 
-<link rel="canonical" href="https://qzloo.cn/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/">
+<link rel="canonical" href="https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%20%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
 
 
 <script id="page-configurations">
@@ -84,7 +76,7 @@
   };
 </script>
 
-  <title>Zabbix(3)：zabbix添加主机 | 97y</title>
+  <title>Zabbix(6)：zabbix触发器、事件、动作 相关概念 | 97y</title>
   
 
 
@@ -226,7 +218,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%20%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.jpg">
@@ -239,7 +231,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Zabbix(3)：zabbix添加主机
+          Zabbix(6)：zabbix触发器、事件、动作 相关概念
         </h1>
 
         <div class="post-meta">
@@ -249,7 +241,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2010-01-05 19:29:44" itemprop="dateCreated datePublished" datetime="2010-01-05T19:29:44+08:00">2010-01-05</time>
+              <time title="创建时间：2010-01-11 20:11:56" itemprop="dateCreated datePublished" datetime="2010-01-11T20:11:56+08:00">2010-01-11</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,14 +268,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -296,62 +288,19 @@
 
       
         <h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
-<p>在前文中，我们已经介绍过了<code>zabbix</code>是什么，以及怎样安装<code>zabbix</code>环境，那么现在，我们应该开始实际动手使用<code>zabbix</code>了，为了能让大家更加容易理解实际使用过程中将会用到的术语以及概念，我们先把实际工作场景描述清楚，然后再根据描述的工作场景进行演示</p>
+<p>这篇文章将会初步的介绍<code>zabbix</code>中的触发器、事件、动作等相关概念</p>
+<p>我有一个朋友，我很佩服他，他的行动能力特别强，想到了，计划好了，就去做，比如说养鸡，他在农村找了一片地，盖了一个养鸡场，然后就开始养鸡，并且把土鸡下的蛋加以包装，以绿色无污染的优势在市场上售卖，后来，他还去考了一个飞机驾照，我知道养鸡和飞机并没有什么关系，我只是单纯的感觉他的人生非常精彩而已，有的客官看到这里就怒了，我是来了解<code>zabbix</code>的，不是来看什么’养鸡’和’飞机’的，能不能别瞎<code>BB</code>，耽误大爷时间，这位大爷您息怒，听我慢慢道来</p>
+<p>其实，我们可以从养鸡场的某个场景去理解<code>zabbix</code>的触发器、事件、动作等相关概念，在养鸡场，温度是非常重要的，温度要适中，要让鸡感觉很舒服，不同年龄段的鸡对温度的要求也不一样<del>咳咳</del>扯远了，我们不考虑这么多，假设，养鸡场的温度不能低于<code>30</code>度，如果低于<code>30</code>度，鸡们就会很不满意，就会吃不好睡不好，导致身体亚健康，鸡的身体不好，我们把它们做成鸡肉的时候口感就不好，口感不好客户就不会购买我们的鸡肉，我们作为鸡场老板来说，是不能允许这样的事情发生的，所以，我们必须时刻监控着养鸡场的温度，如果养鸡场的温度低于<code>30</code>度，必须马上亮起红灯警报，工作人员发现红灯亮起，就必须马上采取措施，比如，把暖气打开，或者马上报告老板</p>
 </blockquote><a id="more"></a>
+<p>![6-1](zabbix触发器、事件、动作 相关概念/6-1.jpg)</p>
 <blockquote>
-<p>假设，我们想要使用<code>zabbix</code>监控一台<code>linux</code>服务器，那么，我们肯定要将这个服务器纳入<code>zabbix</code>的管理范围，而’添加主机’这个操作，就是将被监控的主机纳入<code>zabbix</code>管理范围的一个必须操作，如果我们有<code>10</code>台主机都需要被<code>zabbix</code>监控呢，没错，这<code>10</code>台主机都必须被添加到<code>zabbix</code>的监控列表中，在<code>zabbix</code>中，我们将被监控的对象称之为’主机’，’主机’不一定是服务器，也可以是路由器，交换机等网络设备，而且，根据主机的属性、角色、特征的不同，我们还能够将主机分组，比如，我们有<code>10</code>台服务器，<code>10</code>台服务器中，有<code>3</code>台<code>windows</code>服务器，有<code>7</code>台<code>linux</code>服务器，那么，我们可以按照操作系统的不同，将他们分为两组，<code>windows</code>服务器组与<code>linux</code>服务器组，或者我们不按照操作系统对主机进行分组，而是根据服务器的角色对主机分组，比如，一共<code>10</code>台服务器，<code>3</code>台是提供<code>ldap</code>服务的，<code>2</code>台是提供<code>web</code>服务的，<code>5</code>台是提供数据库服务的，我们也可以把它们按照角色分成<code>3</code>组，<code>ldap</code>主机组、<code>web</code>主机组、<code>db</code>主机组，当然，我们只是举个例子，实际应用中，具体怎样分组，是根据实际需求视情况而定的，那么，为什么要将主机分组呢，这是为了方便管理，因为同一类主机需要被监控的指标很有可能都是相同的，所以将它们分为一组方便管理，这是后话，我们到时候再聊</p>
-</blockquote>
-<blockquote>
-<p>上面一段话中，我们提到了两个<code>zabbix</code>的常用术语，’主机’与’主机组’，我们再来总结一遍</p>
-<ol>
-<li><code>host</code>(主机)：需要被<code>zabbix</code>监控的对象，被称为主机，主机必须属于某个主机组</li>
-<li><code>hostgroup</code>(主机组)：’主机组’也被称为’主机群组’，是由具有相同属性、特征、角色的多个主机组成的逻辑单元</li>
-</ol>
-</blockquote>
-<blockquote>
-<p>好了，理解上述两个术语，并且能够在<code>zabbix</code>中是同它们，就是我们这篇文章所要达到的目标</p>
-<p>那么，我们来看看怎样在<code>zabbix</code>中添加一台主机，在动手添加主机之前，先说明一下我们的环境</p>
-<p>我们已经将<code>zabbix-server</code>、<code>zabbix-database</code>、<code>zabbix-web</code>安装在了<code>116.62.188.230</code>上</p>
-<p>同时，我们将<code>zabbix-agent</code>安装在了<code>47.96.189.157</code>上</p>
-<p>所以此处，<code>47.96.189.157</code>就是被监控的对象，我们需要将<code>47.96.189.157</code>添加为<code>zabbix</code>主机</p>
-</blockquote>
-<blockquote>
-<p>好了，跟我一起搞起来，首先，打开我们的<code>zabbix web</code>控制台，我们看看都有哪些’主机组’</p>
-<p>点击’配置’—-‘主机群组’，可以看到，系统默认已经为我们准备了一些主机组，如果这些主机组不满足我们的需要，我们也可以创建新的主机组，点击下图中的’创建主机群组’按钮，即可创建主机组，但是，现在我们还不用深入研究主机组，此处只是让大家了解一下，对主机组有一个初步的认识即可</p>
-</blockquote>
-<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-1.jpg" alt="3-1"></p>
-<blockquote>
-<p>同样，点击’配置’—-‘主机’，即可查看已经被加入<code>zabbix</code>主机列表的主机，可以看到，<code>zabbix</code>默认将<code>zabbix server</code>添加为了一台主机，以便可以自己监控自己，但是此处，我们需要添加一台我们自己的主机，就是<code>47.96.189.157</code>，点击’创建主机’，点击创建主机之前，可以选择左侧的’群组’下拉菜单，以确定将要创建的主机所在的主机组，当然，我们也可以先不选主机组，直接点击’创建主机’按钮</p>
-</blockquote>
-<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-2.jpg" alt="3-2"></p>
-<blockquote>
-<p>点击’创建主机’按钮以后，即可看到类似如下界面，为了更好的描述每个步骤，具体解释参考下图后面的注释列表</p>
-</blockquote>
-<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-3.jpg" alt="3-3"></p>
-<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-4.jpg" alt="3-4"></p>
-<ol>
-<li>我们可以在主机名称的文本框中填写被监控主机的主机名称</li>
-<li>‘可见名称’一般使用简短的、易读的、见名知义的名称表示主机即可</li>
-<li>我们可以选择将要创建的主机属于哪个主机组，当然，如果没有合适的主机组，我们也可以直接在创建主机时，直接新建主机组，我们说过，每个主机必须存在于某个主机组中，所以，主机组是必须的</li>
-<li>如果在’3’的位置没有对应的、可用的、合适的主机组，我们可以直接在’新的群组’中创建符合当前主机需要的主机组</li>
-<li>选择通过哪种接口监控当前主机，可选的方式有<code>IPMI</code>接口、<code>JMX</code>接口、<code>SNMP</code>接口、<code>agent</code>接口，我们说过，’主机’在<code>zabbix</code>中，可以是服务器，路由器，交换机等等硬件设备，有的硬件设备只支持某种接口，所以，当我们添加主机时，会让我们选择通过哪种合适的接口监控它，具体各接口的使用场景我们已经在第一篇介绍<code>zabbix</code>概念的文章中描述过，此处不再赘述，当然，如果一台自助机能被多种接口所监控，也可以同时配置多个接口监控这台主机，但是当前，我们需要监控的主机是一台<code>linux</code>服务器，而且已经安装了对应的<code>agent</code>端，所以，此处，我们只使用<code>agent</code>接口对当前主机进行监控，而使用<code>agent</code>接口时，可以通过<code>IP</code>连接到对应<code>agent</code>，也可以使用主机名连接到对应<code>agent</code>，而此处，我们选择使用<code>IP</code>地址连接到对应的<code>agent</code>，<code>IP</code>地址就是我们将要添加的主机的<code>IP</code>，<code>47.96.189.157</code>，对应端口为默认的<code>10050</code>，如果你想要使用主机名连接到对应的<code>agent</code>，那么需要保证主机名能够被正常解析到<code>47.96.189.157</code>上，此处不再赘述，如果有多个<code>IP</code>可以连接到对应<code>agent</code>，可以点击’添加’，添加一条新的<code>IP</code></li>
-<li>对将要添加的主机进行描述，添加相应的描述信息即可</li>
-<li>表示是否使用<code>zabbix proxy</code>监控当前主机，虽然上图中，此处翻译为’由<code>agent</code>代理程序检测’，但是实际是用于指定<code>zabbix proxy</code>的，与<code>zabbix agent</code>并没有关系，但是因为我们没有配置<code>zabbix proxy</code>，所以此处保持默认即可</li>
-</ol>
-<blockquote>
-<p>好了，按照上述界面中的配置进行设置以后，点击’添加’按钮，即可简单的添加一台主机，可以看到，<code>47.96.189.157</code>已经被添加到了主机列表中</p>
-</blockquote>
-<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-5.jpg" alt="3-5"></p>
-<blockquote>
-<p>而且，如果此时我们再次查看主机组，已经发现，<code>Zabbix test</code>主机组已经被添加了，而且其中的成员已经包含了<code>testzabbix1</code>主机</p>
-</blockquote>
-<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-6.jpg" alt="3-6"></p>
-<blockquote>
-<p>回到主机列表，可以看到我们刚才添加的<code>testzabbix1</code>主机，但是<code>testzabbix1</code>主机的’可用性’对应的<code>4</code>种接口都是灰色的</p>
-</blockquote>
-<p><img src="/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/3-7.jpg" alt="3-7"></p>
-<blockquote>
-<p>上图中，<code>ZBX</code>就代表<code>agent</code>接口，虽然我们在添加主机时，配置了通过<code>agent</code>监控对应主机，但是，由于我们并没有配置监控主机的任何指标，所以，<code>ZBX</code>仍然是灰色的，也就是说，我们现在只是将<code>47.96.189.157</code>加入了<code>zabbix</code>的监控范围，但是并没有对它进行任何实际的监控，因为我们还没有配置任何’监控项’，至于怎样配置监控项，且听下回分解</p>
+<p>那么现在，我们把刚才说的养鸡场的场景与我们的<code>zabbix</code>联系起来，我们要监控养鸡场的温度，就好像我们要监控服务器的磁盘使用率一样，无论是养鸡场的温度，还是磁盘的使用率，都是我们要监控的指标，我们在前文已经描述过，一个被监控的指标被称作一个’监控项’(<code>item</code>)，那么，养鸡场的温度，在<code>zabbix</code>中就是一个<code>item</code>，而我们规定，养鸡场的温度低于<code>30</code>度时就要亮起红灯，也就是说，<code>30</code>度就是温度这个指标的阈值，那么，养鸡场的温度低于<code>30</code>度，在<code>zabbix</code>中怎样表达呢？在<code>zabbix</code>中，我们可以这样描述：养鸡场温度 &lt; <code>30</code></p>
+<p>没错，就是这么简单，而’养鸡场温度 &lt; <code>30</code>‘不过是一个数学上的’比较表达式’而已，这个表达式，在<code>zabbix</code>中被称为’触发器’(<code>Triggers</code>)，换种角度解释，我们还可以从字面上理解’触发器’，触发器是会被触发的机器，但是只有满足触发条件时，触发器才会被触发，当触发器被触发以后，会产生某个’事件’(<code>Events</code>)，比如，当养鸡场温度低于<code>30</code>度时，红灯会亮起，那么’红灯亮起’就可以理解为’养鸡场温度 &lt; <code>30</code>‘这个’触发器’所产生的’事件’，当温度低于<code>30</code>时，触发器的条件被满足，就会产生’红灯事件’，当’红灯事件’产生以后，工作人员就会采取相应的措施，比如通知老板或者打开暖气，那么，’打开暖气’或者’报告老板’的一系列措施，在<code>zabbix</code>中被称为’动作’(<code>Actions</code>)。好了，我想我已经解释清楚了，为了解决这些概念，还要描述怎么养鸡，真实不容易~</p>
+<p>那么，我们现在抛开’养鸡场’的概念，纯粹的总结一边<code>zabbix</code>中的触发器、事件、动作等相关概念</p>
+<p><strong>触发器(<code>Triggers</code>)</strong>：我们可以把<code>zabbix</code>的触发器理解成一个条件表达式，我们往往通过触发器定义被监控项的阈值，当触发器对应的表达式被满足时，则代表被监控项达到了我们设定的阈值，也就意味着发生了我们不想要遇到的问题，换句话说，当监控项的值处于合理范围时，触发器不会被触发，当监控项的值超出合理范围(即达到阈值)，触发器则会被触发，当触发器被触发时，往往代表着出现了问题，触发器未被触发时，其的状态为’<code>OK</code>‘，当触发器被触发时，触发器的状态为’<code>Problem</code>‘，当被监控项的值达到阈值时，触发器的状态’<code>OK</code>‘变为’<code>Problem</code>‘，当监控项的值再次回归到合理范围时，触发器的状态会从’<code>Problem</code>‘转换回’<code>OK</code>‘</p>
+<p><strong>事件(<code>Events</code>)</strong>：当触发器的状态发生改变时，则会产生对应的’事件’，当然，由触发器的状态改变而产生的事件被称为’触发器事件’，<code>zabbix</code>中，事件分为几种类型，除了’触发器事件’，还有一些别的事件，此处为了方便描述，暂且不提及它们，我们可以把’事件’大概理解成一个重要的事情</p>
+<p><strong>动作(<code>Actions</code>)</strong>：当某个事件产生时，需要对应的处理措施，这种处理措施被称为动作</p>
+<p>好了，这篇文章中，我们只是大概的描述了触发器、事件、动作的相关概念，但是并没有实际使用它们，我们会在以后的文章中，给出对应的应用示例，并且在实际使用时再更加详细的了解它们</p>
 </blockquote>
 
     </div>
@@ -368,7 +317,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/" title="Zabbix(3)：zabbix添加主机">https://qzloo.cn/2010/01/05/zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/</a>
+    <a href="https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%20%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" title="Zabbix(6)：zabbix触发器、事件、动作 相关概念">https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%20%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -396,17 +345,14 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/" rel="next" title="Zabbix(2)：Zabbix安装">
-                  <i class="fa fa-chevron-left"></i> Zabbix(2)：Zabbix安装
+                <a href="/2010/01/09/zabbix%E6%B7%BB%E5%8A%A0%E5%B8%A6%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E7%9B%91%E6%8E%A7%E9%A1%B9/" rel="next" title="Zabbix(5)：zabbix添加带有参数的监控项">
+                  <i class="fa fa-chevron-left"></i> Zabbix(5)：zabbix添加带有参数的监控项
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2010/01/07/zabbix%E6%B7%BB%E5%8A%A0%E7%9B%91%E6%8E%A7%E9%A1%B9/" rel="prev" title="Zabbix(4)：zabbix添加监控项">
-                  Zabbix(4)：zabbix添加监控项 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
