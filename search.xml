@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Zabbix(8)：zabbix触发器详解之二 触发器语法</title>
+    <url>/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%20%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
+<p>这篇文章将会介绍<code>zabbix</code>触发器的语法结构</p>
+<p>在上一篇文章中，我们已经用了’非<code>bu</code>常<code>zhuan</code>通<code>ye</code>俗’的方法给大家解释了什么是触发器，那么这次，我们从专业的角度，总结一下什么是触发器，但是这次的总结可能需要建立在之前文章的基础上，所以大家可以先回顾一下之前的文章</p>
+<p>先来看看我们上一次创建的触发器</p>
+</blockquote><a id="more"></a>
+<p>![8-1](zabbix触发器详解之二 触发器语法/8-1.jpg)</p>
+<blockquote>
+<p>我们也说过，触发器的本质其实就是一个表达式。上次创建的触发器对应的表达式如下图，下图中的表达式的含义为，如果<code>testzabbix1.qzl.net</code>这台主机上的根分区使用率倒数第二次被监控到的值大于<code>18</code>，则触发器将会被触发</p>
+</blockquote>
+<p>![8-2](zabbix触发器详解之二 触发器语法/8-2.jpg)</p>
+<blockquote>
+<p>那么，我们把上图中的表达式放大一下，并且将其分解成<code>5</code>个部分，从而方便我们去理解</p>
+</blockquote>
+<p>![8-3](zabbix触发器详解之二 触发器语法/8-3.jpg)</p>
+<blockquote>
+<p>其实，上面的<code>5</code>个部分我们可以通过如下语法表示，如下语法描述了一个触发器的条件表达式的基本结构</p>
+<p><code>{&lt;server&gt;：&lt;key&gt;.&lt;function&gt;(&lt;parameter&gt;)}&lt;operator&gt;&lt;constant&gt;</code></p>
+<p>此处，我们只总结其专业术语，如果想要通俗的理解，请查阅前一篇文章</p>
+</blockquote>
+<ol>
+<li>上图中的第一部分对应了上述语法中的<code>&lt;server&gt;</code>，表示主机名称，上图中对应的主机为<code>testzabbix1.qzl.net</code></li>
+<li>上图中的第二部分对应了上述语法中的<code>&lt;key&gt;</code>，表示对应主机上某个监控项对应的<code>key</code>，上图中对应的<code>key</code>取得的值为对应主机的根分区的使用率</li>
+<li>上图中的第三部分对应了上述语法中的<code>&lt;function&gt;(&lt;parameter&gt;)</code>，所以说，<code>last(#2)</code>应该被称作一个带有参数的函数，<code>last()</code>被我们称之为函数，<code>#2</code>被我们称之为函数的参数，<code>last(#2)</code>就表示监控项对应的<code>key</code>最近<code>2</code>次中倒数第<code>2</code>次取得的值，那么聪明如你一定想到了，除了<code>last()</code>函数，还有别的函数吗，必须有啊，不同的函数实现的功能则不同，触发器所支持的函数有很多，常用的有<code>avg</code>、<code>count</code>、<code>change</code>、<code>sum</code>、<code>max</code>、<code>min</code>、<code>date</code>等等，看这些函数的名字你也能猜出其大概的作用，无非就是获取监控项的值的最大值，最小值，值的总和，或者平均值等，如果你想要了解它们，可以登录<code>zabbix</code>的官网查看在线手册，地址如下<code>https://www.zabbix.com/documentation/3.0/manual/appendix/triggers/functions</code>而函数的参数格式变化则比较少，如果参数值前面带有’<code>#</code>‘作为前缀，则表示次数，比如<code>avg(#10)</code>，则表示最近<code>10</code>次监控项的值的平均值，如果参数值前面没有’<code>#</code>‘作为前缀，则表示时间，比如<code>sum(300)</code>，表示<code>300</code>秒内监控项的值的综合，<code>max(#20)</code>则表示最近<code>20</code>次监控项的值的最大值，<code>min(600)</code>则表示最近<code>10</code>分钟内监控项的值的最小值，但是需要注意，<code>last(0)</code>的含义与<code>last(#1)</code>的含义相同，都表示最近<code>1</code>次。有的函数还支持使用第<code>2</code>个参数，比如<code>avg(1h，1d)</code>，表示<code>一天</code>前的<code>一小时</code>内的监控项的值的平均值，假设现在的时间是<code>5点</code>，<code>avg(1h)</code>可以理解为<code>4点</code>到<code>5点</code>之间的监控项的值的平均值，而<code>avg(1h，1d)</code>中的<code>1d</code>表示时间偏移量，那么<code>avg(1h，1d)</code>可以理解为昨天<code>4点</code>到<code>5点</code>的监控项的值的平均值</li>
+<li>上图中的第四部分对应了上述语法中的<code>&lt;operator&gt;</code>，其实就是常用的比较操作符或者运算操作符，由于<code>zabbix</code>版本的不同，操作符可能有所变化，<code>zabbix3.0</code>支持的操作符可以参考在线手册，地址如下，如下地址中除了包含表达式支持的操作符，还有一些触发器表达式的实例，都是我们学习的好素材：<code>https://www.zabbix.com/documentation/3.0/manual/config/triggers/expression</code></li>
+<li>上图中的第五部分对应了上述语法中的<code>&lt;constant&gt;</code>，用于设定监控项对应的阈值</li>
+</ol>
+<blockquote>
+<p>如果你看过上一篇文章，那么你一定知道，触发器的表达式时可以通过图形化界面中的配置，自动生成的，既然能够自动生成，我们还需要理解上述表达式的结构吗？虽然话是这样说，但是知其然，知其所以然，不是更好吗，嘿嘿嘿<del>~</del></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Zabbix</category>
+      </categories>
+      <tags>
+        <tag>Zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Zabbix(7)：zabbix触发器详解之一 创建触发器</title>
     <url>/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%20%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
