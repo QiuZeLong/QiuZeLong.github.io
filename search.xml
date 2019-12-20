@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>zabbix</title>
+    <url>/2019/12/20/zabbix/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>Zabbix(8)：zabbix触发器详解之二 触发器语法</title>
     <url>/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
