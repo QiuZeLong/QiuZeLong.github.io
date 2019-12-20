@@ -51,21 +51,22 @@
   };
 </script>
 
-  <meta name="description" content="ZabbixZabbix监控系统入门简介 Zabbix是一个基于WEB界面的提供分布式系统监控的企业级的开源解决方案，Zabbix能监视各种网络参数，保证服务器系统的安全稳定的运行，并提供灵活的通知机制以让SA快速定位并解决存在的各种问题。Zabbix分布式监控系统的优点如下：">
+  <meta name="description" content="zabbix 这篇文章将会介绍zabbix触发器的语法结构 在上一篇文章中，我们已经用了’非bu常zhuan通ye俗’的方法给大家解释了什么是触发器，那么这次，我们从专业的角度，总结一下什么是触发器，但是这次的总结可能需要建立在之前文章的基础上，所以大家可以先回顾一下之前的文章 先来看看我们上一次创建的触发器">
 <meta name="keywords" content="Zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zabbix(1)：Zabbix概念">
-<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;01&#x2F;Zabbix%E6%A6%82%E5%BF%B5&#x2F;index.html">
+<meta property="og:title" content="Zabbix(8)：zabbix触发器详解之二 触发器语法">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;15&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95&#x2F;index.html">
 <meta property="og:site_name" content="97y">
-<meta property="og:description" content="ZabbixZabbix监控系统入门简介 Zabbix是一个基于WEB界面的提供分布式系统监控的企业级的开源解决方案，Zabbix能监视各种网络参数，保证服务器系统的安全稳定的运行，并提供灵活的通知机制以让SA快速定位并解决存在的各种问题。Zabbix分布式监控系统的优点如下：">
+<meta property="og:description" content="zabbix 这篇文章将会介绍zabbix触发器的语法结构 在上一篇文章中，我们已经用了’非bu常zhuan通ye俗’的方法给大家解释了什么是触发器，那么这次，我们从专业的角度，总结一下什么是触发器，但是这次的总结可能需要建立在之前文章的基础上，所以大家可以先回顾一下之前的文章 先来看看我们上一次创建的触发器">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;01&#x2F;Zabbix%E6%A6%82%E5%BF%B5&#x2F;1-1.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;01&#x2F;Zabbix%E6%A6%82%E5%BF%B5&#x2F;1-2.png">
-<meta property="og:updated_time" content="2019-12-19T01:21:15.158Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;15&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95&#x2F;8-1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;15&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95&#x2F;8-2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;15&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95&#x2F;8-3.jpg">
+<meta property="og:updated_time" content="2019-12-20T03:54:29.391Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;01&#x2F;Zabbix%E6%A6%82%E5%BF%B5&#x2F;1-1.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;15&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95&#x2F;8-1.jpg">
 
-<link rel="canonical" href="https://qzloo.cn/2010/01/01/Zabbix%E6%A6%82%E5%BF%B5/">
+<link rel="canonical" href="https://qzloo.cn/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/">
 
 
 <script id="page-configurations">
@@ -79,7 +80,7 @@
   };
 </script>
 
-  <title>Zabbix(1)：Zabbix概念 | 97y</title>
+  <title>Zabbix(8)：zabbix触发器详解之二 触发器语法 | 97y</title>
   
 
 
@@ -221,7 +222,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/01/Zabbix%E6%A6%82%E5%BF%B5/">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.jpg">
@@ -234,7 +235,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Zabbix(1)：Zabbix概念
+          Zabbix(8)：zabbix触发器详解之二 触发器语法
         </h1>
 
         <div class="post-meta">
@@ -244,7 +245,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2010-01-01 09:10:57" itemprop="dateCreated datePublished" datetime="2010-01-01T09:10:57+08:00">2010-01-01</time>
+              <time title="创建时间：2010-01-15 10:20:50" itemprop="dateCreated datePublished" datetime="2010-01-15T10:20:50+08:00">2010-01-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,14 +272,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -290,151 +291,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="Zabbix"><a href="#Zabbix" class="headerlink" title="Zabbix"></a>Zabbix</h4><h5 id="Zabbix监控系统入门简介"><a href="#Zabbix监控系统入门简介" class="headerlink" title="Zabbix监控系统入门简介"></a>Zabbix监控系统入门简介</h5><blockquote>
-<p><code>Zabbix</code>是一个基于<code>WEB</code>界面的提供分布式系统监控的企业级的开源解决方案，<code>Zabbix</code>能监视各种网络参数，保证服务器系统的安全稳定的运行，并提供灵活的通知机制以让SA快速定位并解决存在的各种问题。<code>Zabbix</code>分布式监控系统的优点如下：</p>
+        <h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
+<p>这篇文章将会介绍<code>zabbix</code>触发器的语法结构</p>
+<p>在上一篇文章中，我们已经用了’非<code>bu</code>常<code>zhuan</code>通<code>ye</code>俗’的方法给大家解释了什么是触发器，那么这次，我们从专业的角度，总结一下什么是触发器，但是这次的总结可能需要建立在之前文章的基础上，所以大家可以先回顾一下之前的文章</p>
+<p>先来看看我们上一次创建的触发器</p>
 </blockquote><a id="more"></a>
-<ul>
-<li>支持自动发现服务器和网络设备</li>
-<li>支持底层自动发现</li>
-<li>分布式的监控体系和集中式的<code>WEB</code>管理</li>
-<li>支持主动监控和被动监控模式</li>
-<li>服务器端支持多种操作系统：<code>Linux, Solaris, HP-UX, AIX, FreeBSD, OpenBSD, MAC</code>等</li>
-<li><code>Agent</code>客户端支持多种操作系统：<code>Linux, Solaris, HP-UX, AIX, FreeBSD, Windows</code>等</li>
-<li>基于<code>SNMP</code>、<code>IPMI</code>接口方式也可以监控<code>Agent</code></li>
-<li>安全的用户认证及权限配置</li>
-<li>基于<code>WEB</code>的管理方法，支持自由的自定义事件和邮件发送</li>
-<li>高水平的业务视图监控资源，支持日志审计，资产管理等功能</li>
-<li>支持高水平<code>API</code>二次开发、脚本监控、自<code>Key</code>定义、自动化运维整合调用</li>
-</ul>
-<h5 id="Zabbix监控组件及流程"><a href="#Zabbix监控组件及流程" class="headerlink" title="Zabbix监控组件及流程"></a>Zabbix监控组件及流程</h5><blockquote>
-<p><code>Zabbix</code>监控组件如下图所示，主要由三大组件，分别是 <code>Zabbix server</code>端、<code>Zabbix Proxy</code>、<code>Agent</code>客户端，其中<code>Zabbix Server</code>端包括：<code>WEB GUI</code>、<code>Database</code>、<code>Zabbix_Server</code>。</p>
-</blockquote>
-<p><img src="/2010/01/01/Zabbix%E6%A6%82%E5%BF%B5/1-1.png" alt="1-1"></p>
+<p><img src="/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/8-1.jpg" alt="8-1"></p>
 <blockquote>
-<p><code>Zabbix</code>监控系统具体监控系统流程如下图所示：</p>
+<p>我们也说过，触发器的本质其实就是一个表达式。上次创建的触发器对应的表达式如下图，下图中的表达式的含义为，如果<code>testzabbix1.qzl.net</code>这台主机上的根分区使用率倒数第二次被监控到的值大于<code>18</code>，则触发器将会被触发</p>
 </blockquote>
-<p><img src="/2010/01/01/Zabbix%E6%A6%82%E5%BF%B5/1-2.png" alt="1-2"></p>
+<p><img src="/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/8-2.jpg" alt="8-2"></p>
 <blockquote>
-<p><code>Zabbix</code>监控完整流程包括：<code>Agent</code>安装在被监控的主机上，Agent负责定期收集客户端本地各项数据，并发送到<code>Zabbix Server</code>端，<code>Zabbix Server</code>收到数据，将数据存储到数据库中，用户基于<code>Zabbix WEB</code>可以看到数据在前端展现图像。</p>
-<p>当<code>Zabbix</code>监控某个具体的项目，该项目会设置一个触发器阀值，当被监控的指标超过该触发器设定的阀值，会进行一些必要的动作，动作包括：邮件、微信报警或者执行命令等操作。如下为<code>Zabbix</code>完整监控系统，各个部分负责的工作：</p>
+<p>那么，我们把上图中的表达式放大一下，并且将其分解成<code>5</code>个部分，从而方便我们去理解</p>
 </blockquote>
-<ul>
-<li><code>Zabbix Server</code>：负责接收<code>Agent</code>发送的报告信息的核心组件，所有配置，统计数据及操作数据均由其组织进行</li>
-<li><code>Database Storage</code>：专用于存储所有配置信息，以及存储由<code>Zabbix</code>收集到的数据</li>
-<li><code>Web interface</code>：<code>Zabbix</code>的<code>GUI</code>接口，通常与<code>Server</code>运行在同一台主机上</li>
-<li><code>Proxy</code>：常用于分布监控环境中，代理<code>Server</code>收集部分被监控端的监控数据并统一发往<code>Server</code>端</li>
-<li><code>Zabbix Agent</code>：部署在被监控主机上，负责收集本地数据并发往<code>Server</code>端或<code>Proxy</code>端</li>
-</ul>
+<p><img src="/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/8-3.jpg" alt="8-3"></p>
 <blockquote>
-<p><code>Zabbix</code>监控部署在系统中，会包含常见的四个程序：<code>zabbix_server</code> 、<code>zabbix_get</code>、<code>zabbix_agentd</code>、<code>zabbix_proxy</code>、<code>zabbix_sender</code>等。四个程序启动后分别对应四个进程，如下为每个进程的功能：</p>
+<p>其实，上面的<code>5</code>个部分我们可以通过如下语法表示，如下语法描述了一个触发器的条件表达式的基本结构</p>
+<p><code>{&lt;server&gt;：&lt;key&gt;.&lt;function&gt;(&lt;parameter&gt;)}&lt;operator&gt;&lt;constant&gt;</code></p>
+<p>此处，我们只总结其专业术语，如果想要通俗的理解，请查阅前一篇文章</p>
 </blockquote>
-<ul>
-<li><code>Zabbix_server</code>：<code>Zabbix</code>服务端守护进程，其中<code>zabbix_agentd</code>、<code>zabbix_get</code>、<code>zabbix_sender</code>、<code>zabbix_proxy</code>的数据最终均是提交给<code>Zabbix_Server</code></li>
-<li><code>Zabbix_Agentd</code>：客户端守护进程，负责收集客户端数据，例如收集<code>cpu</code>负载、内存、硬盘使用情况等</li>
-<li><code>Zabbix_get</code>：<code>Zabbix</code>数据获取工具，单独使用的命令，通常在<code>server</code>或者<code>proxy</code>端执行获取远程客户端信息的命令</li>
-<li><code>Zabbix_sender</code>：<code>zabbix</code>数据发送工具，用于发送数据给<code>server</code>或者<code>proxy</code>，通常用于耗时比较长的检查。很多检查非常耗时间，导致<code>zabbix</code>超时。于是我们在脚本执行完毕之后，使用<code>sender</code>主动提交数据</li>
-<li><code>Zabbix_proxy</code>：<code>zabbix</code>分布式代理守护进程，分布式监控架构需要部署<code>Zabbix_Proxy</code></li>
-</ul>
-<h5 id="Zabbix监控方式及数据采集"><a href="#Zabbix监控方式及数据采集" class="headerlink" title="Zabbix监控方式及数据采集"></a>Zabbix监控方式及数据采集</h5><blockquote>
-<p><code>Zabbix</code>分布式监控系统监控客户端的方式常见有三种，分别是<code>Agent</code>方式、<code>SNMP</code>、<code>IPMI</code>方式，三种方式特点如下：</p>
-</blockquote>
-<ul>
-<li><code>Agent</code>：<code>Zabbix</code>可以基于自身<code>zabbix_agent</code>客户端插件监控<code>OS</code>的状态，例如<code>CPU</code>、内存、硬盘、网卡、文件等</li>
-<li><code>SNMP</code>：<code>Zabbix</code>可以通过简单网络管理协议（<code>Simple Network Management Protocol</code>，<code>SNMP</code>)协议监控网络设备或者<code>windows</code>主机等，通过设定<code>SNMP</code>的参数将相关监控数据传送至服务器端，交换机、防火墙等网络设备一般都支持<code>SNMP</code>协议</li>
-<li><code>IPMI</code>：智能平台管理接口（<code>Intelligent  Platform Management Interface</code>，<code>IPMI</code>）即主要应用于设备的物理特性，包括：温度、电压、电扇工作状态、电源供应以及机箱入侵等。<code>IPMI</code>最大的优势在于无论<code>OS</code>在开机还是关机的状态下，只要接通电源就可以实现对服务器的监控</li>
-</ul>
+<ol>
+<li>上图中的第一部分对应了上述语法中的<code>&lt;server&gt;</code>，表示主机名称，上图中对应的主机为<code>testzabbix1.qzl.net</code></li>
+<li>上图中的第二部分对应了上述语法中的<code>&lt;key&gt;</code>，表示对应主机上某个监控项对应的<code>key</code>，上图中对应的<code>key</code>取得的值为对应主机的根分区的使用率</li>
+<li>上图中的第三部分对应了上述语法中的<code>&lt;function&gt;(&lt;parameter&gt;)</code>，所以说，<code>last(#2)</code>应该被称作一个带有参数的函数，<code>last()</code>被我们称之为函数，<code>#2</code>被我们称之为函数的参数，<code>last(#2)</code>就表示监控项对应的<code>key</code>最近<code>2</code>次中倒数第<code>2</code>次取得的值，那么聪明如你一定想到了，除了<code>last()</code>函数，还有别的函数吗，必须有啊，不同的函数实现的功能则不同，触发器所支持的函数有很多，常用的有<code>avg</code>、<code>count</code>、<code>change</code>、<code>sum</code>、<code>max</code>、<code>min</code>、<code>date</code>等等，看这些函数的名字你也能猜出其大概的作用，无非就是获取监控项的值的最大值，最小值，值的总和，或者平均值等，如果你想要了解它们，可以登录<code>zabbix</code>的官网查看在线手册，地址如下<code>https://www.zabbix.com/documentation/3.0/manual/appendix/triggers/functions</code>而函数的参数格式变化则比较少，如果参数值前面带有’<code>#</code>‘作为前缀，则表示次数，比如<code>avg(#10)</code>，则表示最近<code>10</code>次监控项的值的平均值，如果参数值前面没有’<code>#</code>‘作为前缀，则表示时间，比如<code>sum(300)</code>，表示<code>300</code>秒内监控项的值的综合，<code>max(#20)</code>则表示最近<code>20</code>次监控项的值的最大值，<code>min(600)</code>则表示最近<code>10</code>分钟内监控项的值的最小值，但是需要注意，<code>last(0)</code>的含义与<code>last(#1)</code>的含义相同，都表示最近<code>1</code>次。有的函数还支持使用第<code>2</code>个参数，比如<code>avg(1h，1d)</code>，表示<code>一天</code>前的<code>一小时</code>内的监控项的值的平均值，假设现在的时间是<code>5点</code>，<code>avg(1h)</code>可以理解为<code>4点</code>到<code>5点</code>之间的监控项的值的平均值，而<code>avg(1h，1d)</code>中的<code>1d</code>表示时间偏移量，那么<code>avg(1h，1d)</code>可以理解为昨天<code>4点</code>到<code>5点</code>的监控项的值的平均值</li>
+<li>上图中的第四部分对应了上述语法中的<code>&lt;operator&gt;</code>，其实就是常用的比较操作符或者运算操作符，由于<code>zabbix</code>版本的不同，操作符可能有所变化，<code>zabbix3.0</code>支持的操作符可以参考在线手册，地址如下，如下地址中除了包含表达式支持的操作符，还有一些触发器表达式的实例，都是我们学习的好素材：<code>https://www.zabbix.com/documentation/3.0/manual/config/triggers/expression</code></li>
+<li>上图中的第五部分对应了上述语法中的<code>&lt;constant&gt;</code>，用于设定监控项对应的阈值</li>
+</ol>
 <blockquote>
-<p><code>Zabbix</code>监控客户端分为主动监控与被动监控，主被动模式以客户端为参照，<code>Zabbix</code>监控客户端默认为被动模式，可以修改为主动模式，只需要在客户端配置文件中添加。可以关闭被动模式的方法：在配置文件中加入 <code>StartAgents</code>=0，即为关闭被动模式。主被动监控模式区别如下：</p>
-</blockquote>
-<ul>
-<li><code>Zabbix</code>主动模式：<code>Agent</code>主动请求<code>server</code>获取主动的监控项列表，并主动将监控项内需要检测的数据提交给<code>server/proxy</code>，<code>zabbix agent</code>首先向<code>ServerActive</code>配置的<code>IP</code>请求获取<code>active items</code>，获取并提交<code>active tiems</code>数据值<code>server</code>或者<code>proxy</code></li>
-<li><code>Zabbix</code>被动模式：<code>Server</code>向<code>Agent</code>请求获取监控项的数据，<code>Agent</code>返回数据，<code>Server</code>打开一个<code>TCP</code>连接，<code>Server</code>发送请求<code>Agent.ping</code>，<code>Agent</code>接收到请求并且响应，<code>Server</code>处理接收到的数据</li>
-</ul>
-<h5 id="Zabbix监控概念"><a href="#Zabbix监控概念" class="headerlink" title="Zabbix监控概念"></a>Zabbix监控概念</h5><blockquote>
-<p><code>Zabbix</code>监控系统包括很多监控概念，掌握<code>Zabbix</code>监控概念能对<code>Zabbix</code>监控快速的理解，如下为<code>Zabbix</code>常用术语及解释。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>Zabbix常用术语</th>
-<th align="left">Zabbix术语解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>主机(host)</td>
-<td align="left">被监控的网络设备，可以写IP或者DNS</td>
-</tr>
-<tr>
-<td>主机组(host group)</td>
-<td align="left">主机组用于管理主机，可以批量设置权限</td>
-</tr>
-<tr>
-<td>监控项(item)</td>
-<td align="left">具体监控项，items值由独立的keys进行识别</td>
-</tr>
-<tr>
-<td>触发器(trigger)</td>
-<td align="left">为某个items设置触发器，达到触发器会执行action动作</td>
-</tr>
-<tr>
-<td>事件(event)</td>
-<td align="left">例如达到某个触发器，称之为一个事件</td>
-</tr>
-<tr>
-<td>动作(action)</td>
-<td align="left">对于特定事件事先定义的处理方法，默认可以发送信息及发送命令</td>
-</tr>
-<tr>
-<td>报警升级(escalation)</td>
-<td align="left">发送警报或执行远程命令的自定义方案，如隔5分钟发送一次警报，共发送5次等</td>
-</tr>
-<tr>
-<td>媒介(media)</td>
-<td align="left">发送通知的方式，可以支持Mail、SMS、Scripts等</td>
-</tr>
-<tr>
-<td>通知(notification)</td>
-<td align="left">通过设置的媒介向用户发送的有关某事件的信息</td>
-</tr>
-<tr>
-<td>远程命令</td>
-<td align="left">达到触发器，可以在被监控端执行命令</td>
-</tr>
-<tr>
-<td>模板(template)</td>
-<td align="left">可以快速监控被监控端，模块包含：item、trigger、graph、screen、application</td>
-</tr>
-<tr>
-<td>web场景(web scennario)</td>
-<td align="left">用于检测web站点可用性，监控HTTP关键词</td>
-</tr>
-<tr>
-<td>web前端(frontend)</td>
-<td align="left">Zabbix的web接口</td>
-</tr>
-<tr>
-<td>图形(graph)</td>
-<td align="left">监控图像</td>
-</tr>
-<tr>
-<td>屏幕(screens)</td>
-<td align="left">屏幕显示</td>
-</tr>
-<tr>
-<td>幻灯(slide show)</td>
-<td align="left">幻灯显示</td>
-</tr>
-<tr>
-<td>##### Zabbix工作模式</td>
-<td align="left"></td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>我们知道，<code>agent</code>端会将采集完的数据主动发送给<code>server</code>端，这种模式我们称之为主动模式，即对于<code>agent</code>端来说是主动的</p>
-<p>其实，<code>agent</code>端也可以不主动发送数据，而是等待<code>server</code>过来拉取数据，这种模式我们称之为被动模式</p>
-<p>聪明如你一定已经明白，不管是主动模式还是被动模式，都是对于<code>agent</code>端来说的，而且，主动模式与被动模式可以同时存在，并不冲突</p>
-<p>管理员可以在<code>agent</code>端使用一个名为<code>zabbix_sender</code>的工具，测试是否能够向<code>server</code>端发送数据</p>
-<p>管理员可以在<code>server</code>端使用一个名为<code>zabbix_get</code>的工具，测试是否能够从<code>agent</code>端拉取数据</p>
+<p>如果你看过上一篇文章，那么你一定知道，触发器的表达式时可以通过图形化界面中的配置，自动生成的，既然能够自动生成，我们还需要理解上述表达式的结构吗？虽然话是这样说，但是知其然，知其所以然，不是更好吗，嘿嘿嘿<del>~</del></p>
 </blockquote>
 
     </div>
@@ -451,7 +335,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/01/Zabbix%E6%A6%82%E5%BF%B5/" title="Zabbix(1)：Zabbix概念">https://qzloo.cn/2010/01/01/Zabbix%E6%A6%82%E5%BF%B5/</a>
+    <a href="https://qzloo.cn/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/" title="Zabbix(8)：zabbix触发器详解之二 触发器语法">https://qzloo.cn/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -479,17 +363,14 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2005/01/07/Django-Templates-%E6%A8%A1%E6%9D%BF%E5%B1%82/" rel="next" title="Django-Templates-模板层">
-                  <i class="fa fa-chevron-left"></i> Django-Templates-模板层
+                <a href="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" rel="next" title="Zabbix(7)：zabbix触发器详解之一创建触发器">
+                  <i class="fa fa-chevron-left"></i> Zabbix(7)：zabbix触发器详解之一创建触发器
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/" rel="prev" title="Zabbix(2)：Zabbix安装">
-                  Zabbix(2)：Zabbix安装 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -528,7 +409,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Zabbix"><span class="nav-text">Zabbix</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Zabbix监控系统入门简介"><span class="nav-text">Zabbix监控系统入门简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Zabbix监控组件及流程"><span class="nav-text">Zabbix监控组件及流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Zabbix监控方式及数据采集"><span class="nav-text">Zabbix监控方式及数据采集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Zabbix监控概念"><span class="nav-text">Zabbix监控概念</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#zabbix"><span class="nav-text">zabbix</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
