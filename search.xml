@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>zabbix</title>
+    <url>/2019/12/23/zabbix/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Zabbix(10)：zabbix动作详解</title>
+    <url>/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
+<p>这篇文章将会介绍<code>zabbix</code>中的’动作’，也就是所谓的’<code>Actions</code>‘</p>
+<p>在前文中，我们一直拿’养鸡场’的场景作为学习<code>zabbix</code>的示例，这次还是老套路，仍然拿’养鸡场’作为话题的切入点</p>
+<p>为了防止养鸡场的温度低于<code>30</code>度，我们在养鸡场中放置了一台监控设备，这台监控设备能够每隔<code>1</code>分钟检测一次养鸡场温度，如果最近一次检测到养鸡场的温度低于<code>30</code>度，则会亮起红灯，当养鸡场管理员看到红灯亮起，就会先打开暖气后一段时间以内，养鸡场温度仍然无法恢复到<code>30</code>度以上，那么工作人员则需要采取进一步措施了，比如说报告老板</p>
+<p>在前文中我们已经解释过，’养鸡场温度’可以理解为<code>zabbix</code>的监控项，<code>30</code>度可以理解为养鸡场温度的阈值，’养鸡场温度 &lt; <code>30</code>‘可以理解为<code>zabbix</code>中的触发器，并且，我们已经在前文中定义了对应的监控项、触发器等，但是，我们并没有刻意的触发对应的触发器，因为我们还没有定义对应的’动作(<code>Actions</code>)’，也就是说，即使触发器被触发、产生了相应的事件，我们也无法收到’报警信息’，而’动作’是什么呢？刚才描述的’养鸡场’场景中的’打开暖气’、’报告老板’等一系列措施，都可以理解为<code>zabbix</code>中的动作，说的再通俗一点，’动作’就是在监控项出现异常时，<code>zabbix</code>应该采取哪些措施，是向管理员发送邮件呢，还是执行对应的脚本呢？这些就是所谓的’动作’</p>
+<p>在<code>zabbix</code>中，动作是可以’步进’的，什么意思呢？仍然以养鸡场为例，当温度低于<code>30</code>度，养鸡场工作人员会先打开暖气，等待<code>2</code>分钟，如果<code>2</code>分钟以后，养鸡场温度仍然低于<code>30</code>度，工作人员则需要将情况报告给老板，那么，养鸡场工作人员采取的动作一共有两步，第一步：打开暖气。第二步：报告老板。这就是所谓的’步进’，一个动作可以由多个步骤组成，如果前面的步骤无法解决问题，则按照顺序执行后面的步骤，当然，一个动作也可以只有一步</p>
+<p>那么现在，我们一起来看看怎样在<code>zabbix</code>中创建一个动作，此处仍然使用我们之前的测试环境，前文中我们已经创建了用于监控磁盘使用率的监控项’<code>RootPartitionUsed</code>‘，以及对应的触发器’<code>RootPartitionUsedTrigger</code>‘，现在，我们需要创建一个动作，与监控项和触发器结合起来一起使用，打开<code>zabbix</code>控制台，点击’配置’—-‘动作’，点击下图中的’创建动作’按钮，即可创建动作，我们也可以选择对应动作的事件源，由于我们并没有详细解释过’事件’，所以此处保持默认即可，点击创建动作</p>
+</blockquote><a id="more"></a>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-1.jpg" alt="10-1"></p>
+<blockquote>
+<p>可以看到，动作由三个部分组成：’动作’、’条件’、’操作’，我们一个一个聊</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-2.jpg" alt="10-2"></p>
+<blockquote>
+<p>在名称中填写动作的名字，由于当前动作是为了监控项’<code>RootPartitionUsed</code>‘而准备的，所以，我们命名当前动作为’<code>RootPartitionUsedActions</code>‘</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-3.jpg" alt="10-3"></p>
+<blockquote>
+<p>上图中的’默认接收人’想要表达的意思并不正确，我们一起看一下’英文原版界面’，如下图</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-4.jpg" alt="10-4"></p>
+<blockquote>
+<p>可以看到，英文界面中，此处想要表达的意思为’默认主题’，由于翻译的问题，此处显示为’默认接收人’，容易引起误解</p>
+<p>‘默认主题’中的内容看着有没有很熟悉，没错，<code>{TRIGGER.STATUS}</code>和<code>{TRIGGER.NAME}</code>都是<code>zabbix</code>中的’宏’，我们在设置脚本类型的’报警媒介’时已经使用过它们，此处我们再次解释一遍，我们可以把<code>zabbix</code>的’宏’理解成<code>zabbix</code>中的变量，不同的宏代表的含义也不一样，不过通过宏的名字，一般都能猜出宏的含义，比如<code>{TRIGGER.STATUS}</code>就表示对应触发器的状态，<code>{TRIGGER.NAME}</code>就表示对应触发器的名称，所以此处，’默认主题’的内容由对应的触发器状态和触发器名称组成。’宏’需要用大括号括起，并且’宏’的名字必须由大写字母组成，如果想要了解更多的’宏’都代表什么含义，可以参考官方<code>zabbix3.0</code>在线手册，地址如下<code>https://www.zabbix.com/documentation/3.0/manual/appendix/macros/supported_by_location</code></p>
+<p>默认信息也是由一些’宏’拼凑而成的，每个’宏’的含义可以参看上述连接</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-5.jpg" alt="10-5"></p>
+<blockquote>
+<p>点击动作的’条件’选项卡，可以看到如下界面，我们可以通过这个配置界面，设定当前动作在什么情况下被执行</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-6.jpg" alt="10-6"></p>
+<blockquote>
+<p>比如，我们设置当前动作的目的就是在磁盘使用率超出阈值时，给管理员发送邮件，那么，我们就需要将当前工作与’磁盘使用率监控项对应的触发器’联系在一起，并且需要指明’磁盘使用率监控项对应的触发器’符合哪种条件时，当前动作会被执行，如下图，系统默认为我们设置了一些条件，这些条件可能不符合我们的实际需求，我们可以移除它们，如下图，点击’移除’</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-7.jpg" alt="10-7"></p>
+<blockquote>
+<p>我们可以根据实际情况，定义自己需要的触发条件</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-8.jpg" alt="10-8"></p>
+<blockquote>
+<p>那么现在，我们就来定义当前动作需要与哪个触发器进行关联，首先，选择触发器</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-9.jpg" alt="10-9"></p>
+<blockquote>
+<p>点击下图中的选择按钮</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-10.jpg" alt="10-10"></p>
+<blockquote>
+<p>由于创建当前动作的目的就是为了在磁盘使用率超出阈值时报警，所以，此处选择前文中创建的触发器’<code>RootPartitionUsedTrigger</code>‘，将它们关联在一起</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-11.jpg" alt="10-11"></p>
+<blockquote>
+<p>点击上图中的触发器后，界面如下图，点击下图中的’添加’，即可讲’<code>RootPartitionUsedTrigger</code>‘这个触发器与当前动作关联在一起</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-12.jpg" alt="10-12"></p>
+<blockquote>
+<p>虽然我们将’<code>RootPartitionUsedTrigger</code>‘这个触发器与当前动作关联在了一起，但是这还不够，我们还需要指明，当前触发器处于哪种状态时，执行当前动作，所以，我们需要继续添加条件</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-13.jpg" alt="10-13"></p>
+<blockquote>
+<p>点击下图中的’触发器值’</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-14.jpg" alt="10-14"></p>
+<blockquote>
+<p>选择’触发器值’后，选择对应的值，此处选择’问题’，选择问题后，点击’添加’，以添加新条件</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-15.jpg" alt="10-15"></p>
+<blockquote>
+<p>可以看到，经过配置后，条件如下，如下配置表示，当触发器’<code>RootPartitionUsedTrigger</code>‘的值为’问题’时，当前动作将会被执行，换句话说，当触发器’<code>RootPartitionUsedTrigger</code>‘的状态变为’<code>Problem</code>‘时，当前动作则会被执行，在下图中的计算方式中，显示为’<code>A and B</code>‘，表示<code>A</code>条件与<code>B</code>条件同时满足时，整体条件才被满足，动作才会被执行，我们也可以根据自己的实际情况，调整多个条件之间的逻辑关系</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-16.jpg" alt="10-16"></p>
+<blockquote>
+<p>配置如上后，点击’操作’选项卡，还记得我们之前说的’步进’吗，动作可以只有一步，也可以由多个步骤组成一个动作，此处就是配置动作的这些步骤的</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-17.jpg" alt="10-17"></p>
+<blockquote>
+<p>我们可以定义动作的’步进’时长，比如我们定义每一步的时长为<code>60</code>秒，那么如果动作包含了<code>3</code>个步骤，执行完整个动作则需要<code>180</code>秒，点击下图中的’新的’，为动作创建一个新的步骤</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-18.jpg" alt="10-18"></p>
+<blockquote>
+<p>步骤’<code>1 -1</code>‘表示当前步骤为第一步，第一步的持续时长为一步的默认时长</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-19.jpg" alt="10-19"></p>
+<blockquote>
+<p>如果有多个步骤，每个步骤此处的设置可以类似如下实例：</p>
+<p>第一步：’<code>1 -1</code>‘，表示第一步持续时长为一步的时长</p>
+<p>第二步：’<code>2 -2</code>‘，表示第二步持续时长为一步的时长</p>
+<p>第三步：’<code>3 -4</code>‘，表示第三步持续时长为两步的时长，换句话说，第三大步需要由<code>3、4</code>两个小步组成</p>
+<p>第四步：’<code>5 -7</code>‘，表示第四步持续时长为三步的时长，换句话说，第四大步需要由<code>5、6、7</code>三个小步组成</p>
+<p>也可以不使用默认的步骤时长，我们也可以在’步骤持续时间’中定义当前这一步的持续时长</p>
+<p>当前步骤是为了发送消息还是为了执行对应的命令呢？如果当前动作由多个步骤组成，我们可以在前面的步骤中执行命令，如果执行对应命令后还是无法使监控项回归正常，则在后面的步骤中发送消息，就好像养鸡场的工作人员一样，如果打开暖气无法解决问题，则需要报告老板，此处，我们选择’发送消息’进行演示</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-20.jpg" alt="10-20"></p>
+<blockquote>
+<p>我们需要设置将消息发送给谁，可以发送给选定的用户，也可以发送给用户组中的用户，此处点击下图中的’添加’</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-21.jpg" alt="10-21"></p>
+<blockquote>
+<p>加入我们要将信息发送给Admin用户，点击对应用户</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-22.jpg" alt="10-22"></p>
+<blockquote>
+<p>还记得前一篇文章中我们创建的’报警媒介’吗，此处选择通过哪些报警信道发送报警信息，此处，我们选择上次创建的’MailScript媒介’</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-23.jpg" alt="10-23"></p>
+<blockquote>
+<p>配置如下后，点击下图中的’添加’</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-24.jpg" alt="10-24"></p>
+<blockquote>
+<p>点击上图中的’添加’以后，则可以为当前动作添加一个步骤</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-25.jpg" alt="10-25"></p>
+<blockquote>
+<p>我们再来回顾一下当前这个动作的所有配置</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-26.jpg" alt="10-26"></p>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-27.jpg" alt="10-27"></p>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-28.jpg" alt="10-28"></p>
+<blockquote>
+<p>如果三个标签中的内容都已经正确设置，那么点击任意一个标签中的’添加’按钮即可创建当前动作。点击’添加’按钮后，动作已经被成功添加</p>
+</blockquote>
+<p><img src="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/10-29.jpg" alt="10-29"></p>
+<blockquote>
+<p>好了，动作应该怎样创建，我们已经解释完了，在下一篇文章中，我们会将之前的知识点串联起来，看看监控项异常时，能不能像我们想象的那样收到报警信息</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Zabbix</category>
+      </categories>
+      <tags>
+        <tag>Zabbix</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Zabbix(9)：zabbix定义报警媒介</title>
     <url>/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
@@ -102,7 +244,7 @@
 </blockquote>
 <p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-18.jpg" alt="9-18"></p>
 <blockquote>
-<p>好了，我们已经能够根据实际需要，定义了一个’报警媒介’</p>
+<p>好了，我们已经能够根据实际需要，定义一个’报警媒介’了</p>
 </blockquote>
 ]]></content>
       <categories>
