@@ -54,32 +54,32 @@
   <meta name="description" content="zabbix 这篇文章将会介绍怎样在zabbix中创建触发器，并解释触发器的各个配置 在上一篇文章中，我们已经大概描述了触发器、事件、动作的概念，并且通过’养鸡场’的场景比喻了它们，这次我们来看看怎样创建一个触发器，并且细细品味一番 我们继续使用之前的测试环境，如果你对我们的测试环境还不了解，可以参考之前的文章，首先，打开我们的zabbix控制台">
 <meta name="keywords" content="Zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zabbix(7)：zabbix触发器详解之一创建触发器">
-<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;index.html">
+<meta property="og:title" content="Zabbix(7)：Zabbix触发器详解之一创建触发器">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;index.html">
 <meta property="og:site_name" content="97年的铁憨憨 -">
 <meta property="og:description" content="zabbix 这篇文章将会介绍怎样在zabbix中创建触发器，并解释触发器的各个配置 在上一篇文章中，我们已经大概描述了触发器、事件、动作的概念，并且通过’养鸡场’的场景比喻了它们，这次我们来看看怎样创建一个触发器，并且细细品味一番 我们继续使用之前的测试环境，如果你对我们的测试环境还不了解，可以参考之前的文章，首先，打开我们的zabbix控制台">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-1.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-2.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-3.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-4.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-5.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-6.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-7.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-8.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-9.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-10.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-11.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-12.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-13.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-14.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-15.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-16.jpg">
-<meta property="og:updated_time" content="2019-12-20T03:53:37.442Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-3.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-4.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-5.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-6.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-7.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-8.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-9.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-10.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-11.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-12.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-13.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-14.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-15.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-16.jpg">
+<meta property="og:updated_time" content="2019-12-27T12:50:47.441Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-1.jpg">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;13&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;7-1.jpg">
 
-<link rel="canonical" href="https://qzloo.cn/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/">
+<link rel="canonical" href="https://qzloo.cn/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/">
 
 
 <script id="page-configurations">
@@ -93,7 +93,7 @@
   };
 </script>
 
-  <title>Zabbix(7)：zabbix触发器详解之一创建触发器 | 97年的铁憨憨 -</title>
+  <title>Zabbix(7)：Zabbix触发器详解之一创建触发器 | 97年的铁憨憨 -</title>
   
 
 
@@ -235,7 +235,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.jpg">
@@ -248,7 +248,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Zabbix(7)：zabbix触发器详解之一创建触发器
+          Zabbix(7)：Zabbix触发器详解之一创建触发器
         </h1>
 
         <div class="post-meta">
@@ -309,19 +309,19 @@
 <p>在上一篇文章中，我们已经大概描述了触发器、事件、动作的概念，并且通过’养鸡场’的场景比喻了它们，这次我们来看看怎样创建一个触发器，并且细细品味一番</p>
 <p>我们继续使用之前的测试环境，如果你对我们的测试环境还不了解，可以参考之前的文章，首先，打开我们的<code>zabbix</code>控制台</p>
 </blockquote><a id="more"></a>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-1.jpg" alt="7-1"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-1.jpg" alt="7-1"></p>
 <blockquote>
 <p>因为<code>testzabbix1</code>主机上并不存在任何触发器，所以此处的触发器列表为空，如果对应主机上已经存在对应的触发器，我们可以通过过滤条件筛选出我们想要得到的触发器，此处，我们直接点击’创建触发器’按钮</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-2.jpg" alt="7-2"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-2.jpg" alt="7-2"></p>
 <blockquote>
 <p>可以看到触发器的创建配置界面如下，我们为触发器起个名字，名字叫’<code>RootPartitionUsedTrigger</code>‘，从名字你也能看出来，这个触发器是为了监控根分区的使用率而创建的，还记得我们之前创建的监控项’<code>RootPartitionUsed</code>‘吗？我们现在要做的就是为这个监控项创建一个触发器，当这个监控项的值达到我们指定的阈值时，就会产生某个’事件’，以便我们采取后续的措施，我们在前文中拿’养鸡场’的场景举了例子，当养鸡场的温度低于<code>30</code>度时，红灯就会亮起，而此处，我们会把’养鸡场的温度’换成’磁盘使用率’，把’<code>30</code>度’换成了’<code>18%</code>‘，把红灯亮起想象成某个’事件’即可。而且我们在前文也已经说过，触发器的本质其实是一个表达式，用来定义监控项的阈值，那么我们怎样配置这个表达式呢，点击下图中的’添加’按钮，即可配置触发器的表达式</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-3.jpg" alt="7-3"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-3.jpg" alt="7-3"></p>
 <blockquote>
 <p>点击上图中标注的’添加’按钮以后，可以看到如下界面，这个界面，就是我们用来配置’触发器’的表达式的界面</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-4.jpg" alt="7-4"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-4.jpg" alt="7-4"></p>
 <ol>
 <li>监控项：前文中说过，我们往往通过触发器定义被监控项的阈值，那么这个触发器是定义哪个监控项的阈值呢，我们可以通过此处进行选择</li>
 <li>功能：功能说起来比较麻烦，但是并不难理解，我们举个例子，还拿之前的’养鸡场’做例子，我发现这个例子特别好使，如果你没有看到我们所描述的’养鸡场’的场景，最好先看看之前的文章，会方便我们理解很多东西。我们设定，养鸡场的温度不能低于<code>30</code>度，如果低于<code>30</code>度，则报警，于是我们在养鸡场里面放置了一台设备，这台设备的作用就是每隔<code>1</code>分钟检测一下养鸡场的室温，如果低于<code>30</code>度，就亮起红灯并且警铃大作，比如，我们可以定义，如果最近一次的检测值低于<code>30</code>度，那么就报警，也可以定义，如果<code>5</code>分钟前的检测值低于<code>30</code>度，则报警，甚至，我们还可以这样定义，如果连续<code>10</code>分组内获取的温度值的平均值小于<code>30</code>度，则报警。那么，在<code>zabbix</code>中，怎样实现这样的灵活设定呢，没错，就是通过’功能’栏定义的，功能栏中将常用的各种定义已经为我们准备好了，比如，最近<code>T</code>次检测或者<code>T</code>分钟以内，养鸡场的温度出现了小于<code>N</code>度的情况，在功能栏中可以选择’最新的<code>T</code>值 &lt; <code>N</code>‘</li>
@@ -333,51 +333,51 @@
 <p>经过上述一番解释，我想大家应该已经能够初步的明白这些概念了，那么我们结合实际情况，一步一步的进行配置，配置如下</p>
 <p>首先，选择我们要为哪个监控项配置触发器，即为哪个监控项设置阈值，点击’选择’按钮</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-5.jpg" alt="7-5"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-5.jpg" alt="7-5"></p>
 <blockquote>
 <p>点击选择按钮以后，看到如下页面，通过’群组’与’主机’找到对应的主机，此处选择我们的测试主机<code>testzabbix1</code>，找到对应的监控项，因为我们是要为根分区磁盘使用率监控项设置触发器，所以，此处选择’<code>RootPartitionUsed</code>‘监控项</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-6.jpg" alt="7-6"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-6.jpg" alt="7-6"></p>
 <blockquote>
 <p>假如我们想要将触发器定义为’最近第2次监控到根分区使用率大于18%，则触发’，那么我们则选择’last() - Last(most recent) T value’(最新的T值)即可</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-7.jpg" alt="7-7"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-7.jpg" alt="7-7"></p>
 <blockquote>
 <p>最终配置如下，如下配置表示，当<code>testzabbix1</code>这台服务器的根分区使用率倒数第<code>2</code>次被监控到大于<code>18%</code>，则触发器的条件被满足，触发器将会被触发，配置如下后，点击’插入’按钮</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-8.jpg" alt="7-8"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-8.jpg" alt="7-8"></p>
 <blockquote>
 <p>点击上图中的插入按钮后，回到触发器的最初的配置页面，可以看到，<code>zabbix</code>根据我们的设置，自动生成了一个’表达式’，这就是我们前面所说的，触发器的本质是一个表达式</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-9.jpg" alt="7-9"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-9.jpg" alt="7-9"></p>
 <blockquote>
 <p>此刻，客观您再看看这个表达式，是不是就很容易理解了，我再来啰嗦一遍，希望你不要烦，上面的表达式表示，<code>testezabbix1.qzl.net</code>这台主机上的根分区使用率如果最近两次被监控到的值大于<code>18</code>，则触发器将会被触发。我们也可以同时配置多个表达式，点击’表达式构造器’即可定义多个表达式之间的逻辑关系，此处为了演示方便，不会对它们进行详细解释</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-10.jpg" alt="7-10"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-10.jpg" alt="7-10"></p>
 <blockquote>
 <p>‘多重问题事件生成’表示触发器如果处于’<code>problem</code>‘状态，则重复的生成对应的’问题事件’，这样解释有点模糊，不容易理解，等到我们实际用的时候再细细解释，一般不勾选此项</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-11.jpg" alt="7-11"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-11.jpg" alt="7-11"></p>
 <blockquote>
 <p>我们可以对触发器进行描述，还能为触发器添加一个<code>url</code>，当我们收到报警信息时，可以通过<code>url</code>快速的定位到触发器所对应的监控项，我们可以把对应监控项的’最新数据’对应的图形连接填入<code>url</code>处，但是，这样说起来不容易理解，没关系，在后面的示例中会进行演示，我们还可以为触发器定义’严重性’，其实就是这个触发器所对应的问题优先级，颜色越深，严重性越大</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-12.jpg" alt="7-12"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-12.jpg" alt="7-12"></p>
 <blockquote>
 <p>此触发器示例的最终配置如下，因为现在并没有定义其他触发器，所以我们无法定义触发器的依赖关系，而且依赖关系的概念我们也没有提及过，所以，此处配置如下后，点击添加即可</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-13.jpg" alt="7-13"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-13.jpg" alt="7-13"></p>
 <blockquote>
 <p>可以看到，触发器已经创建完成了</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-14.jpg" alt="7-14"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-14.jpg" alt="7-14"></p>
 <blockquote>
 <p>此刻，我们再次查看触发器对应监控项的’图形’，应该已经发生了变化</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-15.jpg" alt="7-15"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-15.jpg" alt="7-15"></p>
 <blockquote>
 <p>可以看到，在对应的图形中，已经显示除了对应的触发器，出发与的阈值为<code>18</code>，当大于<code>18</code>时，此触发器会被触发</p>
 </blockquote>
-<p><img src="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-16.jpg" alt="7-16"></p>
+<p><img src="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/7-16.jpg" alt="7-16"></p>
 <blockquote>
 <p>好了，我们已经定义了一个触发器，但是我们还从未’触发’过它，不用着急，这是早晚的事儿</p>
 </blockquote>
@@ -396,7 +396,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" title="Zabbix(7)：zabbix触发器详解之一创建触发器">https://qzloo.cn/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/</a>
+    <a href="https://qzloo.cn/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" title="Zabbix(7)：Zabbix触发器详解之一创建触发器">https://qzloo.cn/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -424,16 +424,16 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" rel="next" title="Zabbix(6)：zabbix触发器、事件、动作相关概念">
-                  <i class="fa fa-chevron-left"></i> Zabbix(6)：zabbix触发器、事件、动作相关概念
+                <a href="/2010/01/11/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" rel="next" title="Zabbix(6)：Zabbix触发器、事件、动作相关概念">
+                  <i class="fa fa-chevron-left"></i> Zabbix(6)：Zabbix触发器、事件、动作相关概念
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/" rel="prev" title="Zabbix(8)：zabbix触发器详解之二触发器语法">
-                  Zabbix(8)：zabbix触发器详解之二触发器语法 <i class="fa fa-chevron-right"></i>
+                <a href="/2010/01/15/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/" rel="prev" title="Zabbix(8)：Zabbix触发器详解之二触发器语法">
+                  Zabbix(8)：Zabbix触发器详解之二触发器语法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -489,20 +489,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -556,7 +556,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:34</span>
+    <span title="站点阅读时长">2:44</span>
 </div>
 
         

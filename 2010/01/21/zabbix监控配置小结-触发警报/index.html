@@ -54,33 +54,33 @@
   <meta name="description" content="zabbix 在之前的文章中，我们已经总结了主机、监控项、触发器、事件、动作等相关知识点，但是到目前为止，还没有真正的受到过任何一个zabbix中的警告，那么这次，我们就在之前的基础上，刻意的让某个监控项达到指定的阈值，看看能否正常的收到报警信息 在开始实验之前，先描述一下我们的测试环境 被监控主机的IP地址为47.96.189.157，被监控主机的名称为’testzabbix1.qzl.net‘">
 <meta name="keywords" content="Zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zabbix(11)：zabbix监控配置小结,触发警报">
-<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;index.html">
+<meta property="og:title" content="Zabbix(11)：Zabbix监控配置小结,触发警报">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;index.html">
 <meta property="og:site_name" content="97年的铁憨憨 -">
 <meta property="og:description" content="zabbix 在之前的文章中，我们已经总结了主机、监控项、触发器、事件、动作等相关知识点，但是到目前为止，还没有真正的受到过任何一个zabbix中的警告，那么这次，我们就在之前的基础上，刻意的让某个监控项达到指定的阈值，看看能否正常的收到报警信息 在开始实验之前，先描述一下我们的测试环境 被监控主机的IP地址为47.96.189.157，被监控主机的名称为’testzabbix1.qzl.net‘">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-1.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-2.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-3.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-4.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-5.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-6.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-7.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-8.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-9.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-10.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-11.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-12.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-13.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-14.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-15.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-16.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-17.jpg">
-<meta property="og:updated_time" content="2019-12-26T09:07:50.217Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-3.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-4.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-5.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-6.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-7.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-8.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-9.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-10.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-11.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-12.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-13.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-14.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-15.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-16.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-17.jpg">
+<meta property="og:updated_time" content="2019-12-27T12:50:18.751Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-1.jpg">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-1.jpg">
 
-<link rel="canonical" href="https://qzloo.cn/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/">
+<link rel="canonical" href="https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/">
 
 
 <script id="page-configurations">
@@ -94,7 +94,7 @@
   };
 </script>
 
-  <title>Zabbix(11)：zabbix监控配置小结,触发警报 | 97年的铁憨憨 -</title>
+  <title>Zabbix(11)：Zabbix监控配置小结,触发警报 | 97年的铁憨憨 -</title>
   
 
 
@@ -236,7 +236,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.jpg">
@@ -249,7 +249,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Zabbix(11)：zabbix监控配置小结,触发警报
+          Zabbix(11)：Zabbix监控配置小结,触发警报
         </h1>
 
         <div class="post-meta">
@@ -310,72 +310,72 @@
 <p>在开始实验之前，先描述一下我们的测试环境</p>
 <p>被监控主机的<code>IP</code>地址为<code>47.96.189.157</code>，被监控主机的名称为’<code>testzabbix1.qzl.net</code>‘，简易名称为’<code>testzabbix1</code>‘</p>
 </blockquote><a id="more"></a>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-1.jpg" alt="11-1"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-1.jpg" alt="11-1"></p>
 <blockquote>
 <p>在被监控主机上，我们定义了两个监控项，分别用于监控<code>cpu</code>的上下文切换次数和磁盘根分区的使用率</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-2.jpg" alt="11-2"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-2.jpg" alt="11-2"></p>
 <blockquote>
 <p>我们已经为’<code>RootPartitionUsed</code>‘监控项创建了一个触发器，触发器如下</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-3.jpg" alt="11-3"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-3.jpg" alt="11-3"></p>
 <blockquote>
 <p>并且已经定义了对应的动作，当上述触发器被触发时，如下动作会被执行</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-4.jpg" alt="11-4"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-4.jpg" alt="11-4"></p>
 <blockquote>
 <p>好了，现在我们故意造成磁盘使用率超过指定阈值的情况，看看会不会受到警报，在操作之前，先看看我们的磁盘使用率的监控情况</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-5.jpg" alt="11-5"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-5.jpg" alt="11-5"></p>
 <blockquote>
 <p>磁盘使用率为<code>16.91%</code>，阈值为<code>18%</code></p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-6.jpg" alt="11-6"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-6.jpg" alt="11-6"></p>
 <blockquote>
 <p>好了，现在我们进入到被监控主机的根分区，在根分区中创建一个大文件，提高磁盘使用率</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-7.jpg" alt="11-7"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-7.jpg" alt="11-7"></p>
 <blockquote>
 <p>在创建文件的过程中，观察对应的监控图形，发现图形中出现上升曲线，并且已经超过对应的阈值</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-8.jpg" alt="11-8"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-8.jpg" alt="11-8"></p>
 <blockquote>
 <p>磁盘使用率超出阈值以后，触发器被触发，触发器的状态从’<code>OK</code>‘转为’<code>Problem</code>‘，点击’检测中’—-‘事件’，即可看到触发器对应的状态变化</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-9.jpg" alt="11-9"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-9.jpg" alt="11-9"></p>
 <blockquote>
 <p>触发器状态已经从’正常’变为’问题’，最新的事件出现在事件列表的最上方</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-10.jpg" alt="11-9"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-10.jpg" alt="11-9"></p>
 <blockquote>
 <p>此时，我们收到了报警邮件，还记得我们在’动作’中使用过的’宏’吗，<code>PROBLEM</code>为触发器的状态，<code>RootPartitionUsedTrigger</code>为触发器的名称，它们组成了邮件的标题</p>
 <p>如果你不能正常的收到报警邮件，请检查你的’报警媒介’是否能够正常工作，如果使用了脚本类型的’报警媒介’，请确定脚本有正确的执行权限，如果使用了脚本调用了对应的邮件</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-11.jpg" alt="11-11"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-11.jpg" alt="11-11"></p>
 <blockquote>
 <p>打开邮件，内容如下，已经监控到磁盘使用超过了我们设置的阈值，阈值为<code>18%</code></p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-12.jpg" alt="11-12"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-12.jpg" alt="11-12"></p>
 <blockquote>
 <p>好了，现在我们删除对应的测试文件，让根分区的值还原到正常范围内</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-13.jpg" alt="11-13"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-13.jpg" alt="11-13"></p>
 <blockquote>
 <p>根据对应的监控图形，磁盘使用率已经下降到阈值以下</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-14.jpg" alt="11-14"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-14.jpg" alt="11-14"></p>
 <blockquote>
 <p>同时，查看对应事件，触发器的状态也从’问题’重新变回了’正常’，即从’<code>Problem</code>‘又变回了’<code>OK</code>‘</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-15.jpg" alt="11-15"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-15.jpg" alt="11-15"></p>
 <blockquote>
 <p>此时再收到邮件，是触发器的状态恢复正常时发送的信息</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-16.jpg" alt="11-16"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-16.jpg" alt="11-16"></p>
 <blockquote>
 <p>邮件内容如下</p>
 </blockquote>
-<p><img src="/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-17.jpg" alt="11-17"></p>
+<p><img src="/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/11-17.jpg" alt="11-17"></p>
 <blockquote>
 <p>好了，我们已经收到了<code>zabbix</code>的正常报警信息，我想，现在我们已经能够初步的使用<code>zabbix</code>了</p>
 </blockquote>
@@ -394,7 +394,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/" title="Zabbix(11)：zabbix监控配置小结,触发警报">https://qzloo.cn/2010/01/21/zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/</a>
+    <a href="https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/" title="Zabbix(11)：Zabbix监控配置小结,触发警报">https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -422,16 +422,16 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/" rel="next" title="Zabbix(10)：zabbix动作详解">
-                  <i class="fa fa-chevron-left"></i> Zabbix(10)：zabbix动作详解
+                <a href="/2010/01/19/Zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/" rel="next" title="Zabbix(10)：Zabbix动作详解">
+                  <i class="fa fa-chevron-left"></i> Zabbix(10)：Zabbix动作详解
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2010/01/23/zabbix-web%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%E5%91%8A%E8%AD%A6/" rel="prev" title="Zabbix(12)：zabbix-web发送邮件告警">
-                  Zabbix(12)：zabbix-web发送邮件告警 <i class="fa fa-chevron-right"></i>
+                <a href="/2010/01/23/Zabbix-web%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%E5%91%8A%E8%AD%A6/" rel="prev" title="Zabbix(12)：Zabbix-web发送邮件告警">
+                  Zabbix(12)：Zabbix-web发送邮件告警 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -487,20 +487,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -554,7 +554,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:34</span>
+    <span title="站点阅读时长">2:44</span>
 </div>
 
         

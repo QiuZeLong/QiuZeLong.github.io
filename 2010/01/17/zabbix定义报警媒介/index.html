@@ -54,34 +54,34 @@
   <meta name="description" content="zabbix 这篇文章将会介绍zabbix中的’报警媒介’，也就是所谓的’Media types‘ 当zabbix中的某些被监控指标出现异常时，zabbbix会通过哪种方式通知运维工程师呢？是通过邮件呢，还是通过短信呢，或者是通过其他方式呢？今天我们就来聊聊zabbix的报警方式，无论是通过邮件报警还是通过短信报警，无非都是通过某种’媒介’将报警信息传递给收信人，所以在zabbix中，报警方式被称">
 <meta name="keywords" content="Zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zabbix(9)：zabbix定义报警媒介">
-<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;index.html">
+<meta property="og:title" content="Zabbix(9)：Zabbix定义报警媒介">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;index.html">
 <meta property="og:site_name" content="97年的铁憨憨 -">
 <meta property="og:description" content="zabbix 这篇文章将会介绍zabbix中的’报警媒介’，也就是所谓的’Media types‘ 当zabbix中的某些被监控指标出现异常时，zabbbix会通过哪种方式通知运维工程师呢？是通过邮件呢，还是通过短信呢，或者是通过其他方式呢？今天我们就来聊聊zabbix的报警方式，无论是通过邮件报警还是通过短信报警，无非都是通过某种’媒介’将报警信息传递给收信人，所以在zabbix中，报警方式被称">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-1.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-2.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-3.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-4.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-5.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-6.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-7.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-8.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-9.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-10.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-11.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-12.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-13.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-14.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-15.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-16.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-17.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-18.jpg">
-<meta property="og:updated_time" content="2019-12-26T09:29:53.575Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-3.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-4.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-5.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-6.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-7.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-8.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-9.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-10.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-11.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-12.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-13.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-14.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-15.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-16.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-17.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-18.jpg">
+<meta property="og:updated_time" content="2019-12-27T12:50:40.367Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-1.jpg">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;17&#x2F;Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B&#x2F;9-1.jpg">
 
-<link rel="canonical" href="https://qzloo.cn/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/">
+<link rel="canonical" href="https://qzloo.cn/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/">
 
 
 <script id="page-configurations">
@@ -95,7 +95,7 @@
   };
 </script>
 
-  <title>Zabbix(9)：zabbix定义报警媒介 | 97年的铁憨憨 -</title>
+  <title>Zabbix(9)：Zabbix定义报警媒介 | 97年的铁憨憨 -</title>
   
 
 
@@ -237,7 +237,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.jpg">
@@ -250,7 +250,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Zabbix(9)：zabbix定义报警媒介
+          Zabbix(9)：Zabbix定义报警媒介
         </h1>
 
         <div class="post-meta">
@@ -317,32 +317,32 @@
 <p><code>Ez Texting</code>：商业的，收费的短信服务(北美运营商提供服务)</p>
 <p>看到上面的描述，我们能用的貌似只剩下了<code>Email</code>和<code>Script</code>了。那么在<code>zabbix</code>中，怎样定义对应的报警媒介呢，很简单，打开我们的<code>zabbix</code>控制台，点击’管理’—-‘报警媒介类型’</p>
 </blockquote><a id="more"></a>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-1.jpg" alt="9-1"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-1.jpg" alt="9-1"></p>
 <blockquote>
 <p>可以看到，默认已经存在一些报警媒介，我们可以对已经存在的报警媒介进行修改，也可以创建符合自己需要的报警媒介，点击’创建媒体类型’按钮</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-2.jpg" alt="9-2"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-2.jpg" alt="9-2"></p>
 <blockquote>
 <p>点击上述按钮后，会出现如下界面，当我们创建报警媒介时，默认类型为’电子邮件’</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-3.jpg" alt="9-3"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-3.jpg" alt="9-3"></p>
 <blockquote>
 <p>展开’类型’下拉框，可以看到对应的几种报警媒介类型，这几种类型我们已经解释过，我们经常用到的无非就是电子邮件和脚本，此处我们选择’脚本’</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-4.jpg" alt="9-4"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-4.jpg" alt="9-4"></p>
 <blockquote>
 <p>选择报警媒介类型为脚本后，配置界面如下，我们说过，通过脚本报警是非常灵活的，因为我们可以通过脚本发送邮件，发送短信，发送微信等，脚本内部具体通过哪种方式报警，取决于我们怎样编写脚本</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-5.jpg" alt="9-5"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-5.jpg" alt="9-5"></p>
 <blockquote>
 <p>在配置脚本类型的’报警媒介’之前，我们需要先编写好对应的脚本，并且将脚本放置到对应的目录中，以便<code>zabbix</code>能够找到对应的脚本。那么此处，我们来动手编写一个能够发送邮件信息的脚本，这个脚本很简单，此处我们直接使用mail命令发送邮件，脚本内容如下</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-6.jpg" alt="9-6"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-6.jpg" alt="9-6"></p>
 <blockquote>
 <p>从脚本内容可以看出，我们在脚本中接收了<code>3</code>个参数，第一个参数代表邮件发送给哪个邮件，第二个参数代表邮件主题，第三个参数代表邮件内容，既然定义了参数，那么<code>zabbix</code>在调用此脚本的时候，必然需要传入对应的参数，<code>zabbix</code>会怎样传入参数呢，我们一会儿再聊</p>
 <p>当然，聪明如你一定想到了，上面的脚本只定义了发给谁，发什么，但是没有定义谁来发送邮件，那么现在，我们来配置默认的发件人，编辑<code>/etc/mail.rc</code>配置文件，加入如下内容</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-7.jpg" alt="9-7"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-7.jpg" alt="9-7"></p>
 <blockquote>
 <p><code>set from=发件人邮箱</code></p>
 <p><code>set smtp=smtp服务器</code></p>
@@ -354,21 +354,21 @@
 <p>配置完成后，保存退出即可，但是需要注意，某些邮件服务器可能无法使用上述配置进行登录，需要进行测试，此处的<code>smtp.163.com</code>已经经过测试，可以通过这种方法调用邮箱发送邮件</p>
 <p>目前，我们已经配置了发送邮件的相关配置，并且编写了发送邮件的脚本，但是我们还需要另一步配置，因为<code>zabbix</code>在默认情况下，会去指定的目录中查找对应的报警脚本，所以，我们应该叫报警脚本放置到指定的目录中，<code>zabbix</code>默认的报警脚本目录应该存放在哪里呢，我们通过配置文件可以得到答案，打开<code>/etc/zabbix/zabbix_server.conf</code>配置文件</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-8.jpg" alt="9-8"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-8.jpg" alt="9-8"></p>
 <blockquote>
 <p>通过<code>AlertScriptsPath</code>属性，可以配置报警脚本的指定位置，<code>zabbix</code>会去对应目录中查找报警脚本</p>
 <p>此处，我们将<code>mail.sh</code>脚本放置在对应目录中，并且设置权限如下</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-9.jpg" alt="9-9"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-9.jpg" alt="9-9"></p>
 <blockquote>
 <p>上述步骤配置完成后，回到刚才的’报警媒介’配置界面，因为我们的脚本是通过<code>mail</code>命令进行邮件告警的，所以，我们为这个报警媒介取名为’<code>MailScript</code>‘，如下图</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-10.jpg" alt="9-10"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-10.jpg" alt="9-10"></p>
 <blockquote>
 <p>类型选择’脚本’，脚本名称为’<code>mail.sh</code>‘，<code>zabbix</code>会自动到<code>AlertScriptsPath</code>属性对应的目录中查找相同名称的脚本，还记得我们刚才写的脚本吗，我们向脚本中传入了<code>3</code>个参数，我们可以通过’脚本参数’设定需要传入的参数，当<code>zabbix</code>调用对应脚本时，会自动把’脚本参数’中对应的值按照顺序传入对应的脚本中</p>
 <p>点击上图中的’添加’连接，可以添加对应的参数，如下图，我们添加了三个参数</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-11.jpg" alt="9-11"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-11.jpg" alt="9-11"></p>
 <blockquote>
 <p>从上图可以看出，我们在这个报警媒介中设定了<code>3</code>个参数，这<code>3</code>个参数是什么意思呢，他们分别代表报警接收人，报警的主题，报警的信息</p>
 <p>其实，这种由大括号括起，并且由大写字母组成的字符串在<code>zabbix</code>中被称作’宏’，我们可以理解为<code>zabbix</code>内置的变量，当不同的警告发生时，上述的<code>3</code>个’宏’的值会自动发生变化</p>
@@ -377,33 +377,33 @@
 <p>在<code>zabbix3.0</code>之前，上图中的<code>3</code>个参数是默认传入对应脚本的，不用我们再手动进行定义，但是从<code>zabbix3.0</code>开始，如果想要向对应的脚本传入上述<code>3</code>个参数，则需要按照上图进行定义</p>
 <p>好了，定义完成后，点击’添加’按钮，即可创建一个名称为’<code>MailScript</code>‘的报警媒介了</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-12.jpg" alt="9-12"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-12.jpg" alt="9-12"></p>
 <blockquote>
 <p>到此处，我们已经成功的定义了一个’报警媒介’，从此，我们可以通过这个媒介，向用户发送报警信息了</p>
 <p>但是，如果想要某个<code>zabbix</code>用户能够接收到从’<code>MailScript</code>报警媒介’发送过来的报警，还需要进一步配置，比如，当’<code>Admin</code>‘用户想要通过’<code>MailScript</code>‘报警媒介接收警报时，则必须能够’适配’这种媒介，如果’<code>Admin</code>‘用户没有使用’<code>MailScript</code>媒介’的能力，那么’<code>Admin</code>‘用户将无法接收到由’<code>MailScript</code>媒介’发出的报警信息。我们应该怎样让用户能够对应的报警媒介呢，配置步骤如下</p>
 <p>打开<code>zabbix</code>控制台，点击’管理’—-‘用户’，选中要配置的用户，此处以管理员为例</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-13.jpg" alt="9-13"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-13.jpg" alt="9-13"></p>
 <blockquote>
 <p>点击下图中，红框中的’报警媒介’</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-14.jpg" alt="9-14"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-14.jpg" alt="9-14"></p>
 <blockquote>
 <p>点击下图中的’添加’连接</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-15.jpg" alt="9-15"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-15.jpg" alt="9-15"></p>
 <blockquote>
 <p>在类型中，选择我们刚才创建的’报警媒介’，选择’<code>MailScript</code>‘，因为’<code>MailScript</code>‘最终还是使用邮件发送信息，所以此处，收件人填写’<code>Admin</code>‘用户所使用的报警信息接收邮箱，同时，还能够选择在哪些时段使用这种’报警媒介’接收信息，接收哪种级别的报警信息，是不是很人性化？配置如下图后，点击添加按钮</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-16.jpg" alt="9-16"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-16.jpg" alt="9-16"></p>
 <blockquote>
 <p>确定无误后，点击’更新’按钮</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-17.jpg" alt="9-17"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-17.jpg" alt="9-17"></p>
 <blockquote>
 <p>此刻，如果有对应的报警信息需要通过’<code>MailScript</code>媒介’发送给’<code>Admin</code>‘用户，’<code>Admin</code>‘用户就可以接收到对应的报警信息了。所以，在使用的过程中，如果定义了新的’报警媒介’，不要忘记为对应的用户添加’报警媒介’</p>
 </blockquote>
-<p><img src="/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-18.jpg" alt="9-18"></p>
+<p><img src="/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/9-18.jpg" alt="9-18"></p>
 <blockquote>
 <p>好了，我们已经能够根据实际需要，定义一个’报警媒介’了</p>
 </blockquote>
@@ -422,7 +422,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/" title="Zabbix(9)：zabbix定义报警媒介">https://qzloo.cn/2010/01/17/zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/</a>
+    <a href="https://qzloo.cn/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/" title="Zabbix(9)：Zabbix定义报警媒介">https://qzloo.cn/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -450,16 +450,16 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2010/01/15/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/" rel="next" title="Zabbix(8)：zabbix触发器详解之二触发器语法">
-                  <i class="fa fa-chevron-left"></i> Zabbix(8)：zabbix触发器详解之二触发器语法
+                <a href="/2010/01/15/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/" rel="next" title="Zabbix(8)：Zabbix触发器详解之二触发器语法">
+                  <i class="fa fa-chevron-left"></i> Zabbix(8)：Zabbix触发器详解之二触发器语法
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2010/01/19/zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/" rel="prev" title="Zabbix(10)：zabbix动作详解">
-                  Zabbix(10)：zabbix动作详解 <i class="fa fa-chevron-right"></i>
+                <a href="/2010/01/19/Zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/" rel="prev" title="Zabbix(10)：Zabbix动作详解">
+                  Zabbix(10)：Zabbix动作详解 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -515,20 +515,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -582,7 +582,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:34</span>
+    <span title="站点阅读时长">2:44</span>
 </div>
 
         
