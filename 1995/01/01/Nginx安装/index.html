@@ -60,7 +60,7 @@
 <meta property="og:description" content="Nginx 再开始之前请先阅读下本博主的Http基础概念这一文章 通过阅读，你应该已经对nginx有了一个大概的了解，nginx是一个高性能的http服务器端软件，当然，它还有很多其他的功能和作用，但是我们暂且先不聊这些，因为在没有使用一个东西之前，先看一些不熟悉的概念反而会让我们更加头疼，所以，我们直接切入主题，先安装一个nginx，然后边使用它边了解一些nginx的相关概念 我们需要在cent">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;01&#x2F;Nginx%E5%AE%89%E8%A3%85&#x2F;1-1.jpg">
-<meta property="og:updated_time" content="2019-12-27T12:55:57.850Z">
+<meta property="og:updated_time" content="2019-12-29T11:51:15.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;01&#x2F;Nginx%E5%AE%89%E8%A3%85&#x2F;1-1.jpg">
 
@@ -323,12 +323,12 @@
 <p><code>http://nginx.org/en/linux_packages.html</code></p>
 <p>从上述链接中可以找到主线版和稳定版的<code>yum</code>源，此处，我们配置稳定版的官方<code>yum</code>源，配置过程如下：首先，添加<code>nginx</code>官方<code>yum</code>源文件，此处创建的源文件为<code>/etc/yum.repos.d/nginx.repo</code>，文件内容如下</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/yum.repos.d/nginx.repo</span><br><span class="line">[nginx]</span><br><span class="line">name=nginx repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> vi /etc/yum.repos.d/nginx.repo</span></span><br><span class="line">[nginx]</span><br><span class="line">name=nginx repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>官网源配置完成后，使用如下命令安装</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install -y nginx</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>完成上述配置即可成功安装<code>nginx</code></p>
@@ -339,18 +339,18 @@
 <p><code>http://nginx.org/en/download.html</code></p>
 <p>从上述链接中找到你要下载的<code>nginx</code>版本，此处我下载稳定版<code>nginx-1.16.1</code>，并将下载后的包解压</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># wget http://nginx.org/download/nginx-1.16.1.tar.gz</span><br><span class="line"># tar -xf nginx-1.16.1.tar.gz</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> wget http://nginx.org/download/nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> tar -xf nginx-1.16.1.tar.gz</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>进入解压目录，查看其内部的文件结构，如下</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># cd nginx-1.16.1</span><br><span class="line"># ls -l</span><br><span class="line">total 772</span><br><span class="line">drwxr-xr-x 6 1001 1001   4096 Dec 27 20:02 auto</span><br><span class="line">-rw-r--r-- 1 1001 1001 296463 Aug 13 20:51 CHANGES</span><br><span class="line">-rw-r--r-- 1 1001 1001 452171 Aug 13 20:51 CHANGES.ru</span><br><span class="line">drwxr-xr-x 2 1001 1001   4096 Dec 27 20:02 conf</span><br><span class="line">-rwxr-xr-x 1 1001 1001   2502 Aug 13 20:51 configure</span><br><span class="line">drwxr-xr-x 4 1001 1001   4096 Dec 27 20:02 contrib</span><br><span class="line">drwxr-xr-x 2 1001 1001   4096 Dec 27 20:02 html</span><br><span class="line">-rw-r--r-- 1 1001 1001   1397 Aug 13 20:51 LICENSE</span><br><span class="line">drwxr-xr-x 2 1001 1001   4096 Dec 27 20:02 man</span><br><span class="line">-rw-r--r-- 1 1001 1001     49 Aug 13 20:51 README</span><br><span class="line">drwxr-xr-x 9 1001 1001   4096 Dec 27 20:02 src</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> nginx-1.16.1</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ls -l</span></span><br><span class="line">total 772</span><br><span class="line">drwxr-xr-x 6 1001 1001   4096 Dec 27 20:02 auto</span><br><span class="line">-rw-r--r-- 1 1001 1001 296463 Aug 13 20:51 CHANGES</span><br><span class="line">-rw-r--r-- 1 1001 1001 452171 Aug 13 20:51 CHANGES.ru</span><br><span class="line">drwxr-xr-x 2 1001 1001   4096 Dec 27 20:02 conf</span><br><span class="line">-rwxr-xr-x 1 1001 1001   2502 Aug 13 20:51 configure</span><br><span class="line">drwxr-xr-x 4 1001 1001   4096 Dec 27 20:02 contrib</span><br><span class="line">drwxr-xr-x 2 1001 1001   4096 Dec 27 20:02 html</span><br><span class="line">-rw-r--r-- 1 1001 1001   1397 Aug 13 20:51 LICENSE</span><br><span class="line">drwxr-xr-x 2 1001 1001   4096 Dec 27 20:02 man</span><br><span class="line">-rw-r--r-- 1 1001 1001     49 Aug 13 20:51 README</span><br><span class="line">drwxr-xr-x 9 1001 1001   4096 Dec 27 20:02 src</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>此处，我来大概的描述一下上述文件与目录的作用，与编译其他软件一样，我们需要使用此目录中的<code>configure</code>脚本文件，进行一些编译安装的相关设置，如果你想要看看当前版本的<code>nginx</code>都修复了哪些<code>bug</code>、做了哪些变更、新增了哪些功能，则可以查看<code>CHANGES</code>文件，<code>CHANGES.ru</code>文件是<code>CHANGES</code>文件的俄文版，因为<code>nginx</code>是俄国人发明的，所以有一个单独的俄文版，<code>conf</code>目录中的文件是一些<code>nginx</code>配置文件的模板文件，编译安装时这些文件最终会被拷贝到安装目录中，<code>html</code>目录中的文件是一些静态页面的模块文件，<code>src</code>目录是源代码目录，<code>man</code>目录是帮助文档的目录，<code>contrib</code>目录中的<code>vim</code>目录中的文件可以帮助我们在使用<code>vim</code>编辑<code>nginx</code>配置文件时提供语法高亮功能</p>
 <p>好了，我们大概了解完了目录结构与其作用，现在来完成一下我们在编译之前通常会做的事情，就是看看当前<code>configure</code>脚本中都支持哪些参数，执行如下命令，可以看到编译安装<code>nginx</code>时我们可以使用的配置选项</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./configure --help</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ./configure --<span class="built_in">help</span></span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>执行’<code>./configure --help</code>‘命令后，你可以看到很多选项信息，此处就不列出这些信息了，最常用的莫过于<code>--prefix</code>选项了，使用<code>--prefix</code>选项可以指定<code>nginx</code>编译安装的目录，除了一些常见的目录设置选项，你应该还会看到好多类似’<code>--with-XXX_module</code>‘或’<code>--without-XXX_module</code>‘的选项，这些选项是什么意思呢？说到这些选项，又要提到我们刚才介绍的概念了，那就是’模块’的概念，我们已经知道，<code>nginx</code>是高度模块化的，每个模块就代表一个功能，而且刚才也提到过，只有编译安装的方式才能指定安装哪些模块，不安装哪些模块，其实，你可以这样理解，’<code>--with-XXX_module</code>‘选项表示指明安装对应的模块，’<code>--without-XXX_module</code>‘选项表示指明不安装对应的模块</p>
@@ -363,37 +363,37 @@
 <p>说了这么多，一直没有开始真正的编译工作，那么现在，开始动手编译吧</p>
 <p>首先，确定我们的编译其已经安装</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y gc gcc gcc-c++</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install -y gc gcc gcc-c++</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>其次，我们需要安装一些依赖包，安装哪些依赖取决于你安装了哪些模块，不同的模块依赖的包不同，此例中，安装如下包就可以</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y pcre-devel zlib-devel openssl-devel libxslt-devel GeoIP-devel perl-ExtUtils-Embed</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> yum install -y pcre-devel zlib-devel openssl-devel libxslt-devel GeoIP-devel perl-ExtUtils-Embed</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>我们将<code>nginx</code>安装到<code>/srv/nginx</code>目录下，所以确定有这个目录</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkdir -p /srv/nginx</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> mkdir -p /srv/nginx</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>进入到刚才解压的目录中</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cd nginx-1.16.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> nginx-1.16.1</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>现在开始执行<code>configure</code>脚本，并且启用一些可能会用到的常用模块，操作如下</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./configure --prefix=/srv/nginx --with-file-aio --with-http_auth_request_module --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module=dynamic --with-http_geoip_module=dynamic --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module=dynamic --with-pcre --with-pcre-jit --with-stream=dynamic --with-stream_ssl_module</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ./configure --prefix=/srv/nginx --with-file-aio --with-http_auth_request_module --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module=dynamic --with-http_geoip_module=dynamic --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module=dynamic --with-pcre --with-pcre-jit --with-stream=dynamic --with-stream_ssl_module</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>上述命令执行完成后，没有错误即可进行编译，执行<code>make</code>命令</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># make</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> make</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>完成上述步骤后你可能会发现，解压目录中多了一个<code>objs</code>目录，这个目录是编译安装<code>nginx</code>时产生的中间文件，第一次安装时不用太在意它，如果你以后想要升级老版本的<code>nginx</code>，则会使用到这个目录，此处不用在意，执行如下安装命令</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> make install</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>完成上述步骤即可成功编译安装<code>nginx</code></p>
@@ -401,7 +401,7 @@
 <h5 id="一些其他配置"><a href="#一些其他配置" class="headerlink" title="一些其他配置"></a>一些其他配置</h5><blockquote>
 <p>通过上述两种方法安装<code>nginx</code>后，当你使用<code>vim</code>编辑器编辑<code>nginx</code>的配置文件时，<code>vim</code>编辑器是无法自动识别出<code>nginx</code>的相关语法的，所以，使用<code>vim</code>编辑器编辑<code>nginx</code>配置文件时，无法实现’语法高亮’功能，也就是说，默认情况下，使用<code>vim</code>编辑<code>nginx</code>配置文件时，没有彩色的语法着色，对于使用者来说，这样体验不好，<code>nginx</code>官方很贴心，在源码包中为我们提供了<code>vim</code>针对<code>nginx</code>的语法高亮配置文件，我们只要把这些文件拷贝到<code>vim</code>的对应目录中即可直接使用，方法很简单，如下</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">进入到源码包解压目录</span><br><span class="line"># cd nginx-1.16.1</span><br><span class="line">将相应的语法文件拷贝到对应的目录中,即可完成</span><br><span class="line"># cp -r contrib/vim/* /usr/share/vim/vimfiles/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">进入到源码包解压目录</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">cd</span> nginx-1.16.1</span></span><br><span class="line">将相应的语法文件拷贝到对应的目录中,即可完成</span><br><span class="line"><span class="meta">#</span><span class="bash"> cp -r contrib/vim/* /usr/share/vim/vimfiles/</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>无论时通过官方<code>yum</code>源的方式还是通过编译安装的方式，都可以使用上述方法实现<code>nginx</code>的语法高亮，如果你跟我一样，习惯使用阿里镜像源中的<code>epel</code>源安装<code>nginx</code>，那么你会发现，通过<code>epel</code>源安装<code>nginx</code>后，会自动完成上述<code>vim</code>语法文件的配置过程，不用我们手动拷贝对应的文件，对应的语法文件也是安装包自带的，也很方便</p>
@@ -458,8 +458,8 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2000/01/01/Python/" rel="prev" title="Python代码">
-                  Python代码 <i class="fa fa-chevron-right"></i>
+                <a href="/1995/01/01/Nginx%E7%AC%AC%E4%B8%80%E4%B8%AAweb%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="prev" title="Nginx(2)：Nginx第一个web服务器">
+                  Nginx(2)：Nginx第一个web服务器 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -515,7 +515,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -582,7 +582,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:44</span>
+    <span title="站点阅读时长">2:56</span>
 </div>
 
         
