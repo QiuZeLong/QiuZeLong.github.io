@@ -105,7 +105,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(11)：Zabbix监控配置小结,触发警报</title>
+    <title>Zabbix(11)：zabbix监控配置小结,触发警报</title>
     <url>/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>在之前的文章中，我们已经总结了主机、监控项、触发器、事件、动作等相关知识点，但是到目前为止，还没有真正的受到过任何一个<code>zabbix</code>中的警告，那么这次，我们就在之前的基础上，刻意的让某个监控项达到指定的阈值，看看能否正常的收到报警信息</p>
@@ -190,7 +190,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(10)：Zabbix动作详解</title>
+    <title>Zabbix(10)：zabbix动作详解</title>
     <url>/2010/01/19/Zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>这篇文章将会介绍<code>zabbix</code>中的’动作’，也就是所谓的’<code>Actions</code>‘</p>
@@ -327,7 +327,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(9)：Zabbix定义报警媒介</title>
+    <title>Zabbix(9)：zabbix定义报警媒介</title>
     <url>/2010/01/17/Zabbix%E5%AE%9A%E4%B9%89%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>这篇文章将会介绍<code>zabbix</code>中的’报警媒介’，也就是所谓的’<code>Media types</code>‘</p>
@@ -439,7 +439,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(8)：Zabbix触发器详解之二触发器语法</title>
+    <title>Zabbix(8)：zabbix触发器详解之二触发器语法</title>
     <url>/2010/01/15/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%BA%8C%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>这篇文章将会介绍<code>zabbix</code>触发器的语法结构</p>
@@ -479,7 +479,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(7)：Zabbix触发器详解之一创建触发器</title>
+    <title>Zabbix(7)：zabbix触发器详解之一创建触发器</title>
     <url>/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>这篇文章将会介绍怎样在<code>zabbix</code>中创建触发器，并解释触发器的各个配置</p>
@@ -567,7 +567,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(6)：Zabbix触发器、事件、动作相关概念</title>
+    <title>Zabbix(6)：zabbix触发器、事件、动作相关概念</title>
     <url>/2010/01/11/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>这篇文章将会初步的介绍<code>zabbix</code>中的触发器、事件、动作等相关概念</p>
@@ -593,7 +593,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(5)：Zabbix添加带有参数的监控项</title>
+    <title>zabbix(5)：Zabbix添加带有参数的监控项</title>
     <url>/2010/01/09/Zabbix%E6%B7%BB%E5%8A%A0%E5%B8%A6%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E7%9B%91%E6%8E%A7%E9%A1%B9/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>在前文中，我们已经解释了’监控项’(<code>item</code>)、’键’(<code>key</code>)、’应用集’(<code>application</code>)等概念，并且为<code>testzabbix1</code>主机添加了一个监控项，其作用是监控主机的<code>cpu</code>上下文切换速率</p>
@@ -696,7 +696,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(4)：Zabbix添加监控项</title>
+    <title>Zabbix(4)：zabbix添加监控项</title>
     <url>/2010/01/07/Zabbix%E6%B7%BB%E5%8A%A0%E7%9B%91%E6%8E%A7%E9%A1%B9/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>前文中，已经描述了怎样在<code>zabbix</code>中添加主机，但是，我们并没有对主机进行任何指标的实际监控，那么现在，我们来说说，具体怎样监控我们想要监控的指标</p>
@@ -875,7 +875,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Zabbix(3)：Zabbix添加主机</title>
+    <title>Zabbix(3)：zabbix添加主机</title>
     <url>/2010/01/05/Zabbix%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA/</url>
     <content><![CDATA[<h4 id="zabbix"><a href="#zabbix" class="headerlink" title="zabbix"></a>zabbix</h4><blockquote>
 <p>在前文中，我们已经介绍过了<code>zabbix</code>是什么，以及怎样安装<code>zabbix</code>环境，那么现在，我们应该开始实际动手使用<code>zabbix</code>了，为了能让大家更加容易理解实际使用过程中将会用到的术语以及概念，我们先把实际工作场景描述清楚，然后再根据描述的工作场景进行演示</p>

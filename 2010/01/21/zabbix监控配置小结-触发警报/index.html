@@ -54,7 +54,7 @@
   <meta name="description" content="zabbix 在之前的文章中，我们已经总结了主机、监控项、触发器、事件、动作等相关知识点，但是到目前为止，还没有真正的受到过任何一个zabbix中的警告，那么这次，我们就在之前的基础上，刻意的让某个监控项达到指定的阈值，看看能否正常的收到报警信息 在开始实验之前，先描述一下我们的测试环境 被监控主机的IP地址为47.96.189.157，被监控主机的名称为’testzabbix1.qzl.net‘">
 <meta name="keywords" content="Zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zabbix(11)：Zabbix监控配置小结,触发警报">
+<meta property="og:title" content="Zabbix(11)：zabbix监控配置小结,触发警报">
 <meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;index.html">
 <meta property="og:site_name" content="97年的铁憨憨 -">
 <meta property="og:description" content="zabbix 在之前的文章中，我们已经总结了主机、监控项、触发器、事件、动作等相关知识点，但是到目前为止，还没有真正的受到过任何一个zabbix中的警告，那么这次，我们就在之前的基础上，刻意的让某个监控项达到指定的阈值，看看能否正常的收到报警信息 在开始实验之前，先描述一下我们的测试环境 被监控主机的IP地址为47.96.189.157，被监控主机的名称为’testzabbix1.qzl.net‘">
@@ -76,7 +76,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-15.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-16.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-17.jpg">
-<meta property="og:updated_time" content="2019-12-27T12:50:18.751Z">
+<meta property="og:updated_time" content="2020-01-03T02:55:38.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;21&#x2F;Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5&#x2F;11-1.jpg">
 
@@ -94,7 +94,7 @@
   };
 </script>
 
-  <title>Zabbix(11)：Zabbix监控配置小结,触发警报 | 97年的铁憨憨 -</title>
+  <title>Zabbix(11)：zabbix监控配置小结,触发警报 | 97年的铁憨憨 -</title>
   
 
 
@@ -249,7 +249,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Zabbix(11)：Zabbix监控配置小结,触发警报
+          Zabbix(11)：zabbix监控配置小结,触发警报
         </h1>
 
         <div class="post-meta">
@@ -394,7 +394,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/" title="Zabbix(11)：Zabbix监控配置小结,触发警报">https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/</a>
+    <a href="https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/" title="Zabbix(11)：zabbix监控配置小结,触发警报">https://qzloo.cn/2010/01/21/Zabbix%E7%9B%91%E6%8E%A7%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%BB%93-%E8%A7%A6%E5%8F%91%E8%AD%A6%E6%8A%A5/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -422,8 +422,8 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2010/01/19/Zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/" rel="next" title="Zabbix(10)：Zabbix动作详解">
-                  <i class="fa fa-chevron-left"></i> Zabbix(10)：Zabbix动作详解
+                <a href="/2010/01/19/Zabbix%E5%8A%A8%E4%BD%9C%E8%AF%A6%E8%A7%A3/" rel="next" title="Zabbix(10)：zabbix动作详解">
+                  <i class="fa fa-chevron-left"></i> Zabbix(10)：zabbix动作详解
                 </a>
             </div>
 
