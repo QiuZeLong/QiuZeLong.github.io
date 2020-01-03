@@ -52,19 +52,19 @@
 </script>
 
   <meta name="description" content="zabbix 这篇文章将会初步的介绍zabbix中的触发器、事件、动作等相关概念 我有一个朋友，我很佩服他，他的行动能力特别强，想到了，计划好了，就去做，比如说养鸡，他在农村找了一片地，盖了一个养鸡场，然后就开始养鸡，并且把土鸡下的蛋加以包装，以绿色无污染的优势在市场上售卖，后来，他还去考了一个飞机驾照，我知道养鸡和飞机并没有什么关系，我只是单纯的感觉他的人生非常精彩而已，有的客官看到这里就怒了，">
-<meta name="keywords" content="Zabbix">
+<meta name="keywords" content="zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zabbix(6)：zabbix触发器、事件、动作相关概念">
-<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;11&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5&#x2F;index.html">
+<meta property="og:title" content="zabbix(6)：zabbix触发器、事件、动作相关概念">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;11&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5&#x2F;index.html">
 <meta property="og:site_name" content="97年的铁憨憨 -">
 <meta property="og:description" content="zabbix 这篇文章将会初步的介绍zabbix中的触发器、事件、动作等相关概念 我有一个朋友，我很佩服他，他的行动能力特别强，想到了，计划好了，就去做，比如说养鸡，他在农村找了一片地，盖了一个养鸡场，然后就开始养鸡，并且把土鸡下的蛋加以包装，以绿色无污染的优势在市场上售卖，后来，他还去考了一个飞机驾照，我知道养鸡和飞机并没有什么关系，我只是单纯的感觉他的人生非常精彩而已，有的客官看到这里就怒了，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;11&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5&#x2F;6-1.jpg">
-<meta property="og:updated_time" content="2020-01-03T02:56:57.673Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;11&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5&#x2F;6-1.jpg">
+<meta property="og:updated_time" content="2020-01-03T03:16:51.703Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;11&#x2F;Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5&#x2F;6-1.jpg">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;11&#x2F;zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5&#x2F;6-1.jpg">
 
-<link rel="canonical" href="https://qzloo.cn/2010/01/11/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+<link rel="canonical" href="https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
 
 
 <script id="page-configurations">
@@ -78,7 +78,7 @@
   };
 </script>
 
-  <title>Zabbix(6)：zabbix触发器、事件、动作相关概念 | 97年的铁憨憨 -</title>
+  <title>zabbix(6)：zabbix触发器、事件、动作相关概念 | 97年的铁憨憨 -</title>
   
 
 
@@ -220,7 +220,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/11/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.jpg">
@@ -233,7 +233,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Zabbix(6)：zabbix触发器、事件、动作相关概念
+          zabbix(6)：zabbix触发器、事件、动作相关概念
         </h1>
 
         <div class="post-meta">
@@ -251,8 +251,8 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Zabbix/" itemprop="url" rel="index">
-                    <span itemprop="name">Zabbix</span>
+                  <a href="/categories/zabbix/" itemprop="url" rel="index">
+                    <span itemprop="name">zabbix</span>
                   </a>
                 </span>
             </span>
@@ -294,7 +294,7 @@
 <p>我有一个朋友，我很佩服他，他的行动能力特别强，想到了，计划好了，就去做，比如说养鸡，他在农村找了一片地，盖了一个养鸡场，然后就开始养鸡，并且把土鸡下的蛋加以包装，以绿色无污染的优势在市场上售卖，后来，他还去考了一个飞机驾照，我知道养鸡和飞机并没有什么关系，我只是单纯的感觉他的人生非常精彩而已，有的客官看到这里就怒了，我是来了解<code>zabbix</code>的，不是来看什么’养鸡’和’飞机’的，能不能别瞎<code>BB</code>，耽误大爷时间，这位大爷您息怒，听我慢慢道来</p>
 <p>其实，我们可以从养鸡场的某个场景去理解<code>zabbix</code>的触发器、事件、动作等相关概念，在养鸡场，温度是非常重要的，温度要适中，要让鸡感觉很舒服，不同年龄段的鸡对温度的要求也不一样<del>咳咳</del>扯远了，我们不考虑这么多，假设，养鸡场的温度不能低于<code>30</code>度，如果低于<code>30</code>度，鸡们就会很不满意，就会吃不好睡不好，导致身体亚健康，鸡的身体不好，我们把它们做成鸡肉的时候口感就不好，口感不好客户就不会购买我们的鸡肉，我们作为鸡场老板来说，是不能允许这样的事情发生的，所以，我们必须时刻监控着养鸡场的温度，如果养鸡场的温度低于<code>30</code>度，必须马上亮起红灯警报，工作人员发现红灯亮起，就必须马上采取措施，比如，把暖气打开，或者马上报告老板</p>
 </blockquote><a id="more"></a>
-<p><img src="/2010/01/11/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/6-1.jpg" alt="6-1"></p>
+<p><img src="/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/6-1.jpg" alt="6-1"></p>
 <blockquote>
 <p>那么现在，我们把刚才说的养鸡场的场景与我们的<code>zabbix</code>联系起来，我们要监控养鸡场的温度，就好像我们要监控服务器的磁盘使用率一样，无论是养鸡场的温度，还是磁盘的使用率，都是我们要监控的指标，我们在前文已经描述过，一个被监控的指标被称作一个’监控项’(<code>item</code>)，那么，养鸡场的温度，在<code>zabbix</code>中就是一个<code>item</code>，而我们规定，养鸡场的温度低于<code>30</code>度时就要亮起红灯，也就是说，<code>30</code>度就是温度这个指标的阈值，那么，养鸡场的温度低于<code>30</code>度，在<code>zabbix</code>中怎样表达呢？在<code>zabbix</code>中，我们可以这样描述：养鸡场温度 &lt; <code>30</code></p>
 <p>没错，就是这么简单，而’养鸡场温度 &lt; <code>30</code>‘不过是一个数学上的’比较表达式’而已，这个表达式，在<code>zabbix</code>中被称为’触发器’(<code>Triggers</code>)，换种角度解释，我们还可以从字面上理解’触发器’，触发器是会被触发的机器，但是只有满足触发条件时，触发器才会被触发，当触发器被触发以后，会产生某个’事件’(<code>Events</code>)，比如，当养鸡场温度低于<code>30</code>度时，红灯会亮起，那么’红灯亮起’就可以理解为’养鸡场温度 &lt; <code>30</code>‘这个’触发器’所产生的’事件’，当温度低于<code>30</code>时，触发器的条件被满足，就会产生’红灯事件’，当’红灯事件’产生以后，工作人员就会采取相应的措施，比如通知老板或者打开暖气，那么，’打开暖气’或者’报告老板’的一系列措施，在<code>zabbix</code>中被称为’动作’(<code>Actions</code>)。好了，我想我已经解释清楚了，为了解决这些概念，还要描述怎么养鸡，真实不容易~</p>
@@ -319,7 +319,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/11/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" title="Zabbix(6)：zabbix触发器、事件、动作相关概念">https://qzloo.cn/2010/01/11/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</a>
+    <a href="https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" title="zabbix(6)：zabbix触发器、事件、动作相关概念">https://qzloo.cn/2010/01/11/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E3%80%81%E4%BA%8B%E4%BB%B6%E3%80%81%E5%8A%A8%E4%BD%9C%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -340,23 +340,23 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Zabbix/" rel="tag"># Zabbix</a>
+              <a href="/tags/zabbix/" rel="tag"># zabbix</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2010/01/09/Zabbix%E6%B7%BB%E5%8A%A0%E5%B8%A6%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E7%9B%91%E6%8E%A7%E9%A1%B9/" rel="next" title="zabbix(5)：Zabbix添加带有参数的监控项">
-                  <i class="fa fa-chevron-left"></i> zabbix(5)：Zabbix添加带有参数的监控项
+                <a href="/2010/01/09/zabbix%E6%B7%BB%E5%8A%A0%E5%B8%A6%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E7%9B%91%E6%8E%A7%E9%A1%B9/" rel="next" title="zabbix(5)：zabbix添加带有参数的监控项">
+                  <i class="fa fa-chevron-left"></i> zabbix(5)：zabbix添加带有参数的监控项
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2010/01/13/Zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" rel="prev" title="Zabbix(7)：zabbix触发器详解之一创建触发器">
-                  Zabbix(7)：zabbix触发器详解之一创建触发器 <i class="fa fa-chevron-right"></i>
+                <a href="/2010/01/13/zabbix%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AF%A6%E8%A7%A3%E4%B9%8B%E4%B8%80%E5%88%9B%E5%BB%BA%E8%A7%A6%E5%8F%91%E5%99%A8/" rel="prev" title="zabbix(7)：zabbix触发器详解之一创建触发器">
+                  zabbix(7)：zabbix触发器详解之一创建触发器 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
