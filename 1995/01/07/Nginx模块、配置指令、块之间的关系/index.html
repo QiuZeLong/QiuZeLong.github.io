@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.2">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.2" color="#222">
+  <link rel="alternate" href="/atom.xml" title="97年的铁憨憨 -" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.2">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Nginx 通过前文我们已经了解到，安装nginx以后，nginx会提供一个默认server，我们可以从nginx.conf文件中找到这个默认server的相关配置，如下">
+<meta name="keywords" content="Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx(4)：Nginx模块、配置指令、块之间的关系">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;07&#x2F;Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB&#x2F;index.html">
+<meta property="og:site_name" content="97年的铁憨憨 -">
+<meta property="og:description" content="Nginx 通过前文我们已经了解到，安装nginx以后，nginx会提供一个默认server，我们可以从nginx.conf文件中找到这个默认server的相关配置，如下">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;07&#x2F;Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB&#x2F;4-1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;07&#x2F;Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB&#x2F;4-2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;07&#x2F;Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB&#x2F;4-3.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;07&#x2F;Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB&#x2F;4-4.jpg">
+<meta property="og:updated_time" content="2020-01-03T10:10:05.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;1995&#x2F;01&#x2F;07&#x2F;Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB&#x2F;4-1.jpg">
+
+<link rel="canonical" href="https://qzloo.cn/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>nginx(4)：Nginx模块、配置指令、块之间的关系 | 97年的铁憨憨 -</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">97年的铁憨憨 -</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">愿你我既可以朝九晚五 又能够浪迹天涯</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="仇阿龙!">
+      <meta itemprop="description" content="后来我开始疲于应付人事 懒散之处多处可见得 唯独对你颇是上心">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="97年的铁憨憨 -">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          nginx(4)：Nginx模块、配置指令、块之间的关系
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1995-01-07 14:41:01" itemprop="dateCreated datePublished" datetime="1995-01-07T14:41:01+08:00">1995-01-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h4><blockquote>
+<p>通过前文我们已经了解到，安装<code>nginx</code>以后，<code>nginx</code>会提供一个默认<code>server</code>，我们可以从<code>nginx.conf</code>文件中找到这个默认<code>server</code>的相关配置，如下</p>
+</blockquote><a id="more"></a>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       81;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   html;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page   500 502 503 504  /50x.html;</span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root   html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>前文中已经解释过上述配置的大致含义，而且我们知道，一个<code>http</code>块中可以配置多个<code>server</code>块，一个<code>server</code>块中可以配置多个<code>location</code>，那么此处，我们就来多配置几个<code>location</code>试试，我已经配置好了一个用于演示的示例，如下</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  server &#123;</span><br><span class="line">      listen       81;</span><br><span class="line">      server_name  localhost;</span><br><span class="line"></span><br><span class="line">      location / &#123;</span><br><span class="line">          root   html;</span><br><span class="line">          index  index.html index.htm;</span><br><span class="line">      &#125;</span><br><span class="line">	</span><br><span class="line">location /demo&#123;</span><br><span class="line">   	root /opt;</span><br><span class="line">   	index index.html index.htm;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">      error_page   500 502 503 504  /50x.html;</span><br><span class="line">      location = /50x.html &#123;</span><br><span class="line">          root   html;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如你所见，我在默认配置之上，添加了一个<code>location</code>块，这个<code>location</code>对应的<code>url</code>为’<code>/demo</code>‘，此<code>location</code>块中的’<code>root /opt;</code>‘配置指令表示这个<code>location</code>的文档根目录为’<code>/opt</code>‘目录，所以，当我们在浏览器中访问’<code>/demo/a.jpg</code>‘这个<code>url</code>时，访问的其实是服务器中的’<code>/opt/demo/a.jpg</code>‘文件，如果你不明白为什么<code>url</code>与服务器路径存在这种对应关系，不用担心，我们会在之后的文章中总结<code>root</code>指令和<code>location</code>块之间的具体关系以及它们的用法，此处我们先不用纠结这些，我们先把关注的重点放在别的地方，为了方便示例，我已经在服务器上创建了<code>/opt/demo/</code>目录，并且在此目录中创建了一个名为<code>index.html</code>的文件，<code>index.html</code>内容如下</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> cat /opt/demo/index.html</span></span><br><span class="line">www.qzloo.cn</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由于我在完成上述配置之前已经启动了<code>nginx</code>，所以此处执行’<code>nginx -s reload</code>‘命令重载配置，以便在不停止<code>nginx</code>服务的情况下使新的配置能够立即生效，重载配置以后，在浏览器中访问链接地址’<code>http://116.62.188.230:81/demo/</code>‘，效果如下</p>
+</blockquote>
+<p><img src="/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/4-1.jpg" alt="4-1"></p>
+<blockquote>
+<p>如你所见，我们自定义的<code>location</code>已经生效了，当我们访问’<code>http://116.62.188.230:81/demo/</code>‘这个<code>url</code>时，即可访问到服务器的’<code>/opt/demo/index.html</code>‘文件，通过上述示例，你应该已经明白了，在同一个<code>web</code>服务中，我们可以将不同的<code>url</code>对应到不同的服务器路径中，上例中，除了默认的<code>location</code>，我们又手动配置了一个新的<code>location</code>，默认的<code>location</code>为’<code>/</code>‘，我们手动配置的新的<code>location</code>为’<code>/demo</code>‘，所以，访问这两个<code>url</code>时，会分别对应的不同的文档根目录，从不同的目录中查找对应的资源，又因为<code>index</code>配置指令的原因，会默认访问对应目录中的<code>index.html</code>文件或<code>index.htm</code>文件，所以最终效果就像你刚才看到的那样</p>
+<p>那么你一定发现了，默认的<code>location</code>和我们新加入的<code>location</code>中，<code>index</code>配置指令的值是完全相同的，那么，我们能不能把<code>index</code>配置项提取出来呢？是可以的，由于这两个<code>location</code>的<code>index</code>配置完全相同，所以，我们可以把这个<code>index</code>配置项提取到上一级的<code>server</code>块中，以便这两个<code>location</code>共享这个<code>index</code>配置，配置如下</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">  server &#123;</span><br><span class="line">      listen       81;</span><br><span class="line">      server_name  localhost;</span><br><span class="line"></span><br><span class="line">index  index.html index.htm;</span><br><span class="line"></span><br><span class="line">      location / &#123;</span><br><span class="line">          root   html;</span><br><span class="line">      &#125;</span><br><span class="line">	</span><br><span class="line">location /demo&#123;</span><br><span class="line">	    root   /opt;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">      error_page   500 502 503 504  /50x.html;</span><br><span class="line">      location = /50x.html &#123;</span><br><span class="line">          root   html;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>那么你一定也看明白了，由于两个<code>location</code>块中的<code>index</code>配置项完全相同，所以我们将<code>index</code>配置指令提取到了这两个<code>location</code>块的上一级<code>server</code>块中，以便两个<code>location</code>块能够共享这个<code>index</code>配置，换句话说就是，<code>server</code>块中的<code>index</code>指令是对当前<code>server</code>块中的所有<code>location</code>生效的，当然，如果某个<code>location</code>块中有自己的<code>index</code>配置，那么针对当前<code>location</code>块来说，还是以自己的<code>index</code>配置为准，比如如下配置</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  server &#123;</span><br><span class="line">      listen       81;</span><br><span class="line">      server_name  localhost;</span><br><span class="line"></span><br><span class="line">index  index.html index.htm;</span><br><span class="line"></span><br><span class="line">      location / &#123;</span><br><span class="line">          root   html;</span><br><span class="line">      &#125;</span><br><span class="line">	</span><br><span class="line">location /demo&#123;</span><br><span class="line">   	root   /opt;</span><br><span class="line">   	index  a.jpg;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line">      error_page   500 502 503 504  /50x.html;</span><br><span class="line">      location = /50x.html &#123;</span><br><span class="line">          root   html;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上述配置中，<code>server</code>块中<code>index</code>配置是对当前<code>server</code>块中的所有<code>location</code>块生效的，但是由于’<code>location /demo</code>‘中有自己的<code>index</code>配置，那么针对’<code>location /demo</code>‘来说，自己的<code>index</code>配置的优先级更高，自己的<code>index</code>配置会覆盖上一级的<code>index</code>配置，所以，当我们访问’<code>/demo</code>‘这个<code>url</code>时，默认会在对应的目录中查找<code>a.jpg</code>这个文件，而不是<code>index.html</code>文件，但是另外一个<code>location</code>中由于没有配置<code>index</code>指令，所以它仍然会以上一级<code>server</code>块中的<code>index</code>配置为准</p>
+<p>通过上述示例，你肯定明白了一个道理，同一个配置指令，配置在不同的块中时，对应的’作用域’是不同的</p>
+<p>还记得我们在之前的文章中总结过如下这段话吗</p>
+<p>某些配置指令只能在<code>http</code>块中配置，某些配置指令只能在<code>location</code>块中配置，有些配置指令既能在<code>server</code>块中配置又能在<code>http</code>块中配置，而有些配置指令只能在<code>main</code>区中进行配置</p>
+<p>其实，刚才示例中的<code>index</code>指令就属于那种既能在<code>location</code>块中配置，又能在<code>server</code>块中配置，还能在<code>http</code>块中配置的指令，只不过，当<code>index</code>指令配置在不同的块中时，对应的作用域不同</p>
+<p>举一反三，有些指令既能配置在<code>server</code>块中，也能配置在<code>http</code>块中，当多个<code>server</code>存在相同的配置时，我们可以将这些完全相同的配置指令提取到上一级的<code>http</code>块中，以便多个<code>server</code>块共用这些配置，当然，如果你在某个<code>server</code>中单独配置了对应的配置指令，那么这个<code>server</code>仍然会以自己的配置为准</p>
+<p>通过上述示例，你是不是对’配置指令’和’块’之间的关系理解的更加透彻了呢？</p>
+<p>其实，’配置指令’不仅和’块’有一定的关系，’配置指令’和’模块’也有着非常紧密的对应关系，之前总结过，<code>nginx</code>是模块化的，不同的’模块’负责不同的’功能’，所以，当我们需要针对某个’功能’进行配置时，就需要使用到对应的’配置指令’从根本上来说，每个’配置指令’都属于某一个’模块’，一个’模块’中会有一个或多个’配置指令’，当我们想要对相关模块或者功能进行设置时，就会使用到对应模块中的配置指令。在第一篇文章中我们就提到过，除了内置的标准模块，还有一些可选模块，我们可以在编译安装时选择安装哪些可选模块，如果你没有安装对应的可选模块，那么你也无法使用对应的配置指令。原因刚才已经说过，每个配置指令都属于某一个模块</p>
+<p>当然，作为用户，没有人天生就会使用<code>nginx</code>的这些配置指令，也没有人能够记住所有模块、配置指令、块之间的关系，所以，我们可以通过官方的文档进行查询，那么此处，我们就来介绍一下怎样通过官网文档找到我们想要的答案</p>
+<p>首先，打开<code>nginx</code>开源版官网，<code>nginx.org</code>，打开官网后，可以看到如下页面，在如下页面的右侧菜单中，可以找到’<code>documentation</code>‘链接，点击此链接，即可看到<code>nginx</code>官网文档</p>
+</blockquote>
+<p><img src="/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/4-2.jpg" alt="4-2"></p>
+<blockquote>
+<p>打开文档页面后，你可以看到一些关于<code>nginx</code>的相关链接，这些链接中包含了与<code>nginx</code>相关的各种信息，我们可以从这些连接中找到我们想要的答案，仍然拿刚才的<code>index</code>指令作为示例，如果，我们想要找到<code>index</code>指令的使用方法，该怎么办呢？方法如下</p>
+<p>下拉文档页面，找到如下图所示的’<code>modules reference</code>‘部分，点击下图中标注出的’<code>Alphabetical index of directives</code>‘链接</p>
+</blockquote>
+<p><img src="/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/4-3.jpg" alt="4-3"></p>
+<blockquote>
+<p>点击上述链接后，你会看到一个指令列表，这个指令列表里面就是所有我们能用到的配置指令，这些配置指令按照字母顺序排序，在浏览器中使用’<code>ctrl + f</code>‘进行搜索，此处，我搜索刚才我们用于示例的<code>index</code>配置指令，如下</p>
+</blockquote>
+<p><img src="/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/4-4.jpg" alt="4-4"></p>
+<blockquote>
+<p>点击<code>index</code>链接，即可看到<code>index</code>指令的相关信息，此处就不截图了，首先，页面最上方会显示当前指令属于哪个模块，你看到的应该是一行黑体字’<code>Module ngx_http_index_module</code>‘，也就是说，<code>index</code>配置指令属于<code>ngx_http_index_module</code>模块，由于这个模块中只有<code>index</code>一个指令，所以你在当前页面中只会看到<code>index</code>指令的用法与示例，如果你查看的指令所在的模块包含很多条指令，那么这个模块中所包含的所有指令的用法与示例都会展示在这个页面中，你在当前页面中，应该可以看到<code>index</code>的基本语法概述，如下</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Syntax:	index file ...;</span><br><span class="line">Default: index index.html;</span><br><span class="line">Context: http, server, location</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上述这段示例告诉了我们index指令的基本语法、默认值、以及上下文位置</p>
+<p><code>Syntax</code>表示指令的基本语法</p>
+<p><code>Default</code>表示指令的默认值是什么</p>
+<p><code>Context</code>表示指令所处的上下文位置，上下文位置是什么意思呢？说白了，就是我们之前说的，指令能够配置在哪个块中，从官网的示例中可以看出，<code>index</code>指令只能配置在<code>http</code>块、<code>server</code>块或者<code>location</code>块中</p>
+<p>基本语法概述之后，还有该指令对应的一些示例，你可以参考官网给出的示例学习该指令的用法</p>
+<p>经过上述描述，你肯定已经明白了怎样通过指令列表找到它所在的模块以及指令的用法</p>
+<p>不过在使用的过程中，你可能还会有另一种需求，就是想要了解某个模块的作用，以及这个模块中包含哪些指令，那么，怎样才能找到自己想要了解的模块呢？其实与刚才的步骤非常类似，仍然是打开官网，点击右侧菜单中的’<code>documentation</code>‘链接，进入文档页面，下拉页面，找到’<code>modules reference</code>‘部分，’<code>modules reference</code>‘部分下面其实就是所有模块的模块列表，如果你想要的了解某个模块，只要点击模块对应的链接，就能够看到模块以及对应指令的使用方法了，此处，点击模块列表中的’<code>ngx_http_index_module</code>‘链接，你会发现，此链接中的内容与之前通过指令列表查找到的内容完全相同，其实，我们只是通过两种方式查找到了相同的内容而已，第一种方式是通过指令列表查找，第二种方式是通过模块列表查找，只是查找方式不同，但最终得到的内容是完全相同的</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>仇阿龙!
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://qzloo.cn/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/" title="nginx(4)：Nginx模块、配置指令、块之间的关系">https://qzloo.cn/1995/01/07/Nginx%E6%A8%A1%E5%9D%97%E3%80%81%E9%85%8D%E7%BD%AE%E6%8C%87%E4%BB%A4%E3%80%81%E5%9D%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/1995/01/05/Nginx%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" rel="next" title="nginx(3)：Nginx基础命令">
+                  <i class="fa fa-chevron-left"></i> nginx(3)：Nginx基础命令
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2000/01/01/Python/" rel="prev" title="Python代码">
+                  Python代码 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx"><span class="nav-text">Nginx</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="仇阿龙!"
+    src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">仇阿龙!</p>
+  <div class="site-description" itemprop="description">后来我开始疲于应付人事 懒散之处多处可见得 唯独对你颇是上心</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/QiuZeLong" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;QiuZeLong" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:13472054059@163.com" title="E-Mail &amp;rarr; mailto:13472054059@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">京ICP备19052620号-1 </a>
+      <img src="/images/beian.png" style="display: inline-block;"><a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13012102000080" rel="noopener" target="_blank">冀公网安备 13012102000080号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">仇阿龙</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:10</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.2"></script><script src="/js/motion.js?v=7.4.2"></script>
+<script src="/js/schemes/pisces.js?v=7.4.2"></script>
+<script src="/js/next-boot.js?v=7.4.2"></script>
+
+
+
+  
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.2"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

@@ -216,6 +216,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/1995/01/01/Nginx%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="仇阿龙!">
+      <meta itemprop="description" content="后来我开始疲于应付人事 懒散之处多处可见得 唯独对你颇是上心">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="97年的铁憨憨 -">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/1995/01/01/Nginx%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">nginx(1)：Nginx安装</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：1995-01-01 17:20:33" itemprop="dateCreated datePublished" datetime="1995-01-01T17:20:33+08:00">1995-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
+                  </a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h4><blockquote>
+<p>再开始之前请先阅读下本博主的<code>Http</code>基础概念这一文章</p>
+<p>通过阅读，你应该已经对<code>nginx</code>有了一个大概的了解，<code>nginx</code>是一个高性能的<code>http</code>服务器端软件，当然，它还有很多其他的功能和作用，但是我们暂且先不聊这些，因为在没有使用一个东西之前，先看一些不熟悉的概念反而会让我们更加头疼，所以，我们直接切入主题，先安装一个<code>nginx</code>，然后边使用它边了解一些<code>nginx</code>的相关概念</p>
+<p>我们需要在<code>centos7.3</code>中进行操作，在之后，所有关于<code>nginx</code>的测试与总结都主要在这台机器上进行，这台主机的<code>IP</code>地址是<code>116.62.188.230</code></p>
+<p>首先，我们要做的就是安装<code>nginx</code>，安装<code>nginx</code>通常会使用如下两种办法：</p>
+<p>方法一：通过操作系统的包管理器进行安装</p>
+<p>方法二：在官方网站下载源代码，编译安装</p>
+<p>两种办法各有优缺点，我们慢慢搞</p>
+<p>我使用的是<code>centos</code>操作系统，所以系统自带的包管理器就是<code>yum</code>，在之后演示’方法一’的过程中，我会配置一个<code>yum</code>源，通过<code>yum</code>源安装<code>nginx</code>，这种方法非常方便简单，这就是方法一的优点，而方法一的缺点就是：我们在安装<code>nginx</code>时，无法自定义安装哪些’模块’，’模块’是个什么东西呢？说到’模块’就要提到一个概念了，<code>nginx</code>的结构是高度模块化的，不同的模块，拥有不同的功能，所以，如果我们想要在使用<code>nginx</code>时能够使用某些特定的功能，则必须要安装对应的模块才行，但是通过’方法一’安装的<code>nginx</code>包都是预先编译好的，哪些模块已经编译进去，哪些模块没有编译进去都是已经确定了的，所以，使用方法一的缺点就是没有办法自定义安装相应的模块，不过话又说回来，通过’方法一’安装<code>nginx</code>以后，一些常用的，基本的模块也都是包含的，所以，我们在刚开始使用<code>nginx</code>时，可以使用这种方法快速方便的安装<code>nginx</code>，而方法二的优缺点正好与方法一的优缺点相对应，方法二的优点就是我们可以自定义，哪些模块需要安装，哪些模块不需要安装，定制化比较高，如果想要使用第三方模块，则必须使用编译安装的方式，缺点就是编译安装，没有通过包管理器方便快捷，升级时也相对没有那么方便</p>
+<p>好了，我们大概了解了上述两种安装方法的不同，那么我们要动手实际操作一下</p>
+<p>现在，在安装<code>nginx</code>之前，我们来了解一下<code>nginx</code>都有哪些版本</p>
+<p>首先，在官方的版本中，有两个大方向，一个是开源免费版的<code>nginx</code>，另一个是商业版的<code>nginx plus</code>，这两个版本分别有不同的官方网站，如下：</p>
+<p>开源版官网：<code>nginx.org</code></p>
+<p>商业版官网：<code>nginx.com</code></p>
+<p><code>so</code>，我们之后肯定是基于官方的开源免费版本进行的</p>
+<p>除了官方的<code>nginx</code>发行版，还有一些其他的、比较有名的<code>nginx</code>发行版，比如阿里巴巴的’<code>Tengine</code>‘，或者’<code>OpenResty</code>‘，我并没有使用它们的经验，如果你有兴趣，可以尝试使用它们</p>
+<p>让我们把注意力放到官方的免费开源版的<code>nginx</code>上，开源版在细分之下，还有三个小类：’主线版本’、’稳定版本’、’历史版本’</p>
+<p>那么这三类版本有什么不同呢？通常来说，三类版本的含义如下：</p>
+<p><strong>主线版本</strong>：’<code>Mainline version</code>‘，也有人称之为主干版或者开发版，主线版本通常是最新的版本，主线版通常会加入一些最新的功能，这些功能可能没有经过太多的测试，所以相对可能不太稳定，在真正的生产环境中，通常不会使用主线版本</p>
+<p><strong>稳定版本</strong>：’<code>Stable version</code>‘，稳定版通常是由主线版发展而来的，稳定版通常是经过官方测试的，是官方认为相对稳定的版本，生产环境中通常会使用这一类</p>
+<p><strong>历史版本</strong>：’<code>Legacy version</code>‘，当新的稳定版出现，那么原来的稳定版就会被归类到’历史版本’中去</p>
+<p>我们可以打开官网连接，查看上述各个版本的信息</p>
+<p><code>http://nginx.org/en/download.html</code></p>
+<p>打开上述连接以后，可以看到如下信息，从下图中可以看出，在当前时间下，<code>nginx</code>的最新版的版本号为<code>1.17.7</code>，这个版本就是当前时间段下的’主线版本’，当前的’稳定版本’的版本号为<code>1.16.1</code>，下图中还能看到之前的一些历史版本的版本号</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/1995/01/01/Nginx%E5%AE%89%E8%A3%85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://qzloo.cn/1990/01/01/HTTP%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -372,7 +486,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -439,7 +553,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:02</span>
+    <span title="站点阅读时长">3:10</span>
 </div>
 
         
