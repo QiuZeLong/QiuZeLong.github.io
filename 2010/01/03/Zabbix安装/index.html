@@ -54,62 +54,62 @@
   <meta name="description" content="Zabbix 我们在上一篇介绍zabbix的基本概念的文章中已经描述过，zabbix的几个常用的重要组件，在安装zabbix时，其实就是在安装这些组件 由于我们的监控规模并不庞大，所以此处不会安装zabbix proxy，我们将会安装如下组件： zabbix server zabbix database zabbix web zabbix agent">
 <meta name="keywords" content="zabbix">
 <meta property="og:type" content="article">
-<meta property="og:title" content="zabbix(2)：zabbix安装">
-<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;index.html">
+<meta property="og:title" content="zabbix(2)：Zabbix安装">
+<meta property="og:url" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;index.html">
 <meta property="og:site_name" content="97年的铁憨憨 -">
 <meta property="og:description" content="Zabbix 我们在上一篇介绍zabbix的基本概念的文章中已经描述过，zabbix的几个常用的重要组件，在安装zabbix时，其实就是在安装这些组件 由于我们的监控规模并不庞大，所以此处不会安装zabbix proxy，我们将会安装如下组件： zabbix server zabbix database zabbix web zabbix agent">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-1.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-2.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-3.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-4.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-5.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-6.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-7.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-8.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-9.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-10.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-11.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-12.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-13.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-14.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-15.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-16.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-17.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-18.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-19.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-20.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-21.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-22.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-23.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-24.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-25.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-26.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-27.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-28.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-29.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-30.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-31.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-32.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-33.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-34.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-35.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-36.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-37.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-38.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-39.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-40.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-41.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-42.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-43.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-44.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-45.jpg">
-<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-46.jpg">
-<meta property="og:updated_time" content="2020-01-03T03:20:14.975Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-1.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-3.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-4.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-5.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-6.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-7.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-8.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-9.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-10.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-11.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-12.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-13.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-14.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-15.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-16.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-17.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-18.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-19.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-20.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-21.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-22.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-23.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-24.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-25.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-26.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-27.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-28.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-29.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-30.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-31.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-32.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-33.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-34.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-35.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-36.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-37.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-38.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-39.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-40.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-41.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-42.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-43.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-44.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-45.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-46.jpg">
+<meta property="og:updated_time" content="2020-01-03T03:54:36.798Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;zabbix%E5%AE%89%E8%A3%85&#x2F;2-1.jpg">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;qzloo.cn&#x2F;2010&#x2F;01&#x2F;03&#x2F;Zabbix%E5%AE%89%E8%A3%85&#x2F;2-1.jpg">
 
-<link rel="canonical" href="https://qzloo.cn/2010/01/03/zabbix%E5%AE%89%E8%A3%85/">
+<link rel="canonical" href="https://qzloo.cn/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/">
 
 
 <script id="page-configurations">
@@ -123,7 +123,7 @@
   };
 </script>
 
-  <title>zabbix(2)：zabbix安装 | 97年的铁憨憨 -</title>
+  <title>zabbix(2)：Zabbix安装 | 97年的铁憨憨 -</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/03/zabbix%E5%AE%89%E8%A3%85/">
+    <link itemprop="mainEntityOfPage" href="https://qzloo.cn/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/author.jpg">
@@ -278,7 +278,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          zabbix(2)：zabbix安装
+          zabbix(2)：Zabbix安装
         </h1>
 
         <div class="post-meta">
@@ -352,11 +352,11 @@
 <blockquote>
 <p>首先，为了方便安装，配置<code>zabbix</code>的官方<code>yum</code>源</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-1.jpg" alt="2-1"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-1.jpg" alt="2-1"></p>
 <blockquote>
 <p>我们配置了<code>zabbix3.0</code>的<code>yum</code>源</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-2.jpg" alt="2-2"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-2.jpg" alt="2-2"></p>
 <blockquote>
 <p>同时，我们配置了base源与epel源，因为安装过程中会用到这些yum源</p>
 <p>准备工作完毕，剩下的就是安装各个组件了</p>
@@ -364,7 +364,7 @@
 <h5 id="安装zabbix-server"><a href="#安装zabbix-server" class="headerlink" title="安装zabbix server"></a>安装<code>zabbix server</code></h5><blockquote>
 <p>我们先从<code>zabbix server</code>开始安装，由于我们使用<code>mysql</code>作为数据库，所以，在安装<code>zabbix3.X</code>的版本的<code>server</code>端时，需要安装<code>zabbix-server-mysql</code>包，在<code>3.X</code>的<code>zabbix</code>版本中，并没有单独的<code>zabbix server</code>端程序包，安装<code>zabbix-server-mysql</code>包即为安装了<code>server</code>端包，同时，我们可以在服务端安装<code>zabbix_get</code>包，以便向<code>agent</code>端发起测试采集数据请求，所以，我们在<code>server</code>端安装如下包</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-3.jpg" alt="2-3"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-3.jpg" alt="2-3"></p>
 <blockquote>
 <p>安装完成上述两个包以后，<code>server</code>即为安装完成，是不是很简单，<code>server</code>端的相关配置我们一会儿再进行</p>
 </blockquote>
@@ -372,27 +372,27 @@
 <p>此处我们将<code>mysql</code>与<code>zabbix</code>安装在同一台服务器上，安装<code>mysql</code>的过程此处不再赘述，当我们安装完<code>mysql</code>，需要初始化<code>zabbix</code>的数据库，而在我们安装<code>zabbix server</code>时，其中就包含初始化<code>zabbix</code>数据库的<code>sql</code>脚本</p>
 <p>我们查看刚才安装完成的<code>zabbix-server-mysql</code>，可以看到一个<code>create.sql.gz</code>的包</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-4.jpg" alt="2-4"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-4.jpg" alt="2-4"></p>
 <blockquote>
 <p>解压此包即可获得初始化<code>sql</code>脚本</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-5.jpg" alt="2-5"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-5.jpg" alt="2-5"></p>
 <blockquote>
 <p>但是需要注意的是，此<code>sql</code>脚本中<code>sql</code>只会在对应的数据库中初始化<code>zabbix</code>所需要的数据库表，但是不会创建<code>zabbix</code>数据库，所以，创建<code>zabbix</code>数据库这一步骤，还是需要我们手动进行的，所以，此处我们先手动创建<code>zabbix</code>的数据库，过程如下</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-6.jpg" alt="2-6"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-6.jpg" alt="2-6"></p>
 <blockquote>
 <p><code>zabbix</code>数据库初始化完成后，执行对应的<code>sql</code>初始化脚本</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-7.jpg" alt="2-7"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-7.jpg" alt="2-7"></p>
 <blockquote>
 <p>查看<code>zabbix</code>数据库，发现对应的表已经生成</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-8.jpg" alt="2-8"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-8.jpg" alt="2-8"></p>
 <h5 id="配置zabbix-server端并启动"><a href="#配置zabbix-server端并启动" class="headerlink" title="配置zabbix server端并启动"></a>配置<code>zabbix server</code>端并启动</h5><blockquote>
 <p><code>server</code>端已经安装完毕，并且数据库也已经初始化，现在我们开始配置<code>server</code>端，编辑<code>zabbix server</code>端的配置文件</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-9.jpg" alt="2-9"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-9.jpg" alt="2-9"></p>
 <blockquote>
 <p>此处列出我们可能会经常修改的参数，如下</p>
 <p><code>ListenPort=10051</code></p>
@@ -426,7 +426,7 @@
 <blockquote>
 <p>配置完成后，启动<code>zabbix</code>服务端即可，启动后，<code>10051</code>端口已经被监听</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-10.jpg" alt="2-10"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-10.jpg" alt="2-10"></p>
 <blockquote>
 <p>好了，<code>zabbix server</code>已经启动，剩下的就是初始化<code>zabbix</code>设置了，但是初始化<code>zabbix</code>的设置需要<code>zabbix web</code>提供的<code>GUI</code>图形化界面，所以，我们需要先安装<code>zabbix web</code></p>
 </blockquote>
@@ -434,98 +434,98 @@
 <p><code>zabbix web</code>可以安装在单独的主机上，只要连接到<code>zabbix database</code>所在的数据库即可，但是此处为了方便，我们将<code>zabbix web</code>与<code>mysql</code>以及<code>zabbix server</code>安装在同一台服务器上</p>
 <p>因为<code>zabbix web</code>需要<code>lamp</code>环境，所以，此处我们将会依赖到的环境先安装好</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-11.jpg" alt="2-11"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-11.jpg" alt="2-11"></p>
 <blockquote>
 <p>完成上述步骤后，安装<code>zabbix web</code>所需要的两个包，对应版本为<code>3.0.7</code></p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-12.jpg" alt="2-12"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-12.jpg" alt="2-12"></p>
 <blockquote>
 <p>查看刚才安装完成的<code>zabbix-web</code>程序包，可以看到，<code>zabbix-web</code>的<code>web</code>应用存放在<code>/usr/share/zabbix</code>中</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-13.jpg" alt="2-13"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-13.jpg" alt="2-13"></p>
 <blockquote>
 <p><code>zabbix</code>还是比较贴心的，针对<code>httpd</code>，<code>zabbix-web</code>包中已经包含了对应<code>zabbix</code>文档路径的配置文件</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-14.jpg" alt="2-14"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-14.jpg" alt="2-14"></p>
 <blockquote>
 <p>可以看到，针对<code>zabbix web</code>的文档路径，此文件中已经为我们准备好了默认配置，如果不使用<code>httpd</code>的虚拟主机，主要将时区稍加改动即可直接使用</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-15.jpg" alt="2-15"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-15.jpg" alt="2-15"></p>
 <blockquote>
 <p>而此处，我们使用<code>httpd</code>的虚拟主机访问<code>zabbix web</code>，所以，将配置文件中的内容改为如下配置，同时将时区修改为亚洲上海</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-16.jpg" alt="2-16"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-16.jpg" alt="2-16"></p>
 <blockquote>
 <p>配置完成后，启动hettpd服务</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-17.jpg" alt="2-17"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-17.jpg" alt="2-17"></p>
 <blockquote>
 <p>好了，<code>zabbix web</code>安装配置完成</p>
 </blockquote>
 <h5 id="初始化zabbix-配置"><a href="#初始化zabbix-配置" class="headerlink" title="初始化zabbix 配置"></a>初始化<code>zabbix</code> 配置</h5><blockquote>
 <p>完成上述安装步骤后，访问<code>zabbix_IP/zabbix</code>，可以看到如下图的<code>zabbix</code>安装页面，点击下一步按钮</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-18.jpg" alt="2-18"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-18.jpg" alt="2-18"></p>
 <blockquote>
 <p>可以看到，<code>zabbix</code>自动检查了安装环境是否满足要求，如果出现不满足要求的情况，需要进一步处理，此处没有问题，点击下一步</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-19.jpg" alt="2-19"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-19.jpg" alt="2-19"></p>
 <blockquote>
 <p>此处<code>zabbix</code>需要配置数据库连接，此处配置数据库的类型，<code>IP</code>，端口，数据库名，用户密码等信息，端口填写<code>0</code>表示使用默认端口(<code>3306</code>端口)</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-20.jpg" alt="2-20"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-20.jpg" alt="2-20"></p>
 <blockquote>
 <p>此处，我们可以填写<code>zabbix server</code>的详细信息，包括<code>IP</code>地址，端口号，以及<code>server</code>名称等，填写完成后点击下一步</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-21.jpg" alt="2-21"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-21.jpg" alt="2-21"></p>
 <blockquote>
 <p>在配置之前，请确定概要信息无误，点击下一步</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-22.jpg" alt="2-22"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-22.jpg" alt="2-22"></p>
 <blockquote>
 <p>从提示可以看出，初始化配置已经完成，而且<code>zabbix</code>提示我们，这些配置信息都被保存到了<code>&#39;/etc/zabbix/web/zabbix.conf.php&#39;</code>配置文件中，如果想要更改刚才的一些配置，可以通过修改此文件完成，初始化已经完成，点击结束即可</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-23.jpg" alt="2-23"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-23.jpg" alt="2-23"></p>
 <blockquote>
 <p>点击完成按钮后，可以看到<code>zabbix</code>的登录页面，默认的管理员用户为<code>admin</code>，密码为<code>zabbix</code>，输入用户名密码后登录</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-24.jpg" alt="2-24"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-24.jpg" alt="2-24"></p>
 <blockquote>
 <p>登录完成后，可以看到<code>zabbix</code>的仪表盘</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-25.jpg" alt="2-25"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-25.jpg" alt="2-25"></p>
 <blockquote>
 <p>哈哈哈，我知道你看英文不爽，别急，现在就调成中文，点击下图中红框标注的图标</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-26.jpg" alt="2-26"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-26.jpg" alt="2-26"></p>
 <blockquote>
 <p>语言选择中文，点击更新即可，但是你可能无法在语言中看到中文选项，如果无法找到中文选项，则代表你的配置文件中的中文选项显示属性为<code>False</code></p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-27.jpg" alt="2-27"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-27.jpg" alt="2-27"></p>
 <blockquote>
 <p>如果你安装的<code>zabbix3.0.X</code>无法看到中文选项，那么你可以需要少许额外的操作，首先，你需要修改如下文件</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-28.jpg" alt="2-28"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-28.jpg" alt="2-28"></p>
 <blockquote>
 <p>找到中文对应的值，将显示属性设置为true即可</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-29.jpg" alt="2-29"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-29.jpg" alt="2-29"></p>
 <blockquote>
 <p>但是，你可能还会遇见中文乱码的情况，如果遇到中文乱码，可以从<code>windows</code>中挑选一个顺眼的中文字体，将对应字体文件放置到<code>linux</code>中<code>zabbix web</code>的字体目录中，因为我们使用的是<code>rpm</code>包安装的<code>zabbix web</code>，所以<code>zabbix web</code>的默认字体目录为<code>/usr/share/zabbix/fonts</code>，<code>windows</code>中的字体文件后缀名如果为<code>TTF</code>，当我们把对应字体文件拷贝到<code>zabbix</code>字体目录时，需要修改其后缀名为小写的<code>ttf</code>(如果本来就是小写的则不用任何修改)，字体文件上传完毕后，修改<code>/usr/share/zabbix/include/defines.inc.php</code>配置文件，将下图中显示字体部分修改为刚才上传的字体文件对应的名称即可</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-30.jpg" alt="2-30"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-30.jpg" alt="2-30"></p>
 <blockquote>
 <p>比如，我选择了’微软雅黑’字体，将<code>msyh.ttf</code>文件上传至<code>zabbix</code>的<code>fonts</code>目录后，配置文件修改如下</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-31.jpg" alt="2-31"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-31.jpg" alt="2-31"></p>
 <blockquote>
 <p>好了，上述操作完成后，<code>zabbix</code>控制台即显示为中文了</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-32.jpg" alt="2-32"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-32.jpg" alt="2-32"></p>
 <blockquote>
 <p>但是，你可能会在访问<code>zabbix</code>控制台时，可能会发现如下提示</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-33.jpg" alt="2-33"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-33.jpg" alt="2-33"></p>
 <blockquote>
 <p>如果出现上图中的提示，可能是由如下几个原因引起的</p>
 </blockquote>
@@ -542,31 +542,31 @@
 <blockquote>
 <p>为了更加安全，我们不应该使用管理员的默认密码，所以，我们最好先修改管理员密码</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-34.jpg" alt="2-34"></p>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-35.jpg" alt="2-35"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-34.jpg" alt="2-34"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-35.jpg" alt="2-35"></p>
 <blockquote>
 <p>好了，我们以后的监控工作就要围绕这个<code>web</code>界面展开了，为了以后更好的展开工作，我们先大概的了解一下<code>zabbix</code>的菜单</p>
 </blockquote>
 <blockquote>
 <p>管理菜单中，一般用于管理<code>zabbix</code>自身及<code>zabbix</code>相关设置</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-36.jpg" alt="2-36"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-36.jpg" alt="2-36"></p>
 <blockquote>
 <p>配置菜单中，一般用于配置监控相关设置</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-37.jpg" alt="2-37"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-37.jpg" alt="2-37"></p>
 <blockquote>
 <p>监测中菜单，一般用于查看被监控的相关数据</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-38.jpg" alt="2-38"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-38.jpg" alt="2-38"></p>
 <blockquote>
 <p>报表菜单中，可以为管理员生成一段时间内的监控统计信息</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-39.jpg" alt="2-39"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-39.jpg" alt="2-39"></p>
 <blockquote>
 <p>资产记录菜单中，管理员可以查看被管控的主机有那些，以及相关的资产信息</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-40.jpg" alt="2-40"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-40.jpg" alt="2-40"></p>
 <blockquote>
 <p>好了，<code>zabbix web</code>的安装及简介暂时告一段落</p>
 </blockquote>
@@ -574,20 +574,20 @@
 <p>万事俱备，就差<code>agent</code>端了，<code>agent</code>端安装也非常方便，直接被监控主机上安装如下两个包即可</p>
 <p>此处被管理主机为<code>centos7.3</code>，已经配置好了对应的<code>zabbix</code>源，<code>agent</code>版本可以跟<code>server</code>端版本不一致，没有关系，安装即可</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-41.jpg" alt="2-41"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-41.jpg" alt="2-41"></p>
 <blockquote>
 <p>我们查看一下<code>zabbix-agent</code>都安装了哪些文件，当然，最重要的就是<code>zabbix_agentd.conf</code>这个配置文件了</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-42.jpg" alt="2-42"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-42.jpg" alt="2-42"></p>
 <blockquote>
 <p>还记得我们在刚开始介绍<code>zabbix</code>时，说过的’主动模式’与’被动模式’吗？这两种模式的相关配置，都需要在<code>zabbix_agentd.conf</code>中定义，打开这个文件，我们来配置一下最常用的<code>agent</code>端配置。首先，可以看到配置文件中有很多注释，打开配置文件，首先看到的就是’通用参数配置段’，我们可以在此配置段配置<code>zabbix_agent</code>进程的进程编号文件路径，存储日志方式，日志文件位置，日志滚动阈值等常用设定，细心如你一定已经发现，<code>zabbix_agent</code>配置文件的’通过配置段’中的参数大多数与<code>zabbix_server</code>配置文件中的仓用参数意义相同，所以，此处不再过多赘述，如果没有特殊需要，保持默认即可</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-43.jpg" alt="2-43"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-43.jpg" alt="2-43"></p>
 <blockquote>
 <p>此处先说说我们马上会用到的两个配置段，如下图红框中的注释所描述的，’被动模式配置段’与’主动模式配置段’</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-44.jpg" alt="2-44"></p>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-45.jpg" alt="2-45"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-44.jpg" alt="2-44"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-45.jpg" alt="2-45"></p>
 <blockquote>
 <p>我们已经在最开始的概念介绍中，描述过，’主动模式’与’被动模式’都是对于<code>agent</code>端来说的，而且它们可以同时存在，并不冲突</p>
 <p>我们来看看’被动模式’的相关配置参数</p>
@@ -613,7 +613,7 @@
 <blockquote>
 <p>配置文件修改完成之后，启动agent端进行</p>
 </blockquote>
-<p><img src="/2010/01/03/zabbix%E5%AE%89%E8%A3%85/2-46.jpg" alt="2-46"></p>
+<p><img src="/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/2-46.jpg" alt="2-46"></p>
 <blockquote>
 <p>好了，agent端也已经安装完毕了</p>
 </blockquote>
@@ -632,7 +632,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://qzloo.cn/2010/01/03/zabbix%E5%AE%89%E8%A3%85/" title="zabbix(2)：zabbix安装">https://qzloo.cn/2010/01/03/zabbix%E5%AE%89%E8%A3%85/</a>
+    <a href="https://qzloo.cn/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/" title="zabbix(2)：Zabbix安装">https://qzloo.cn/2010/01/03/Zabbix%E5%AE%89%E8%A3%85/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
